@@ -1,10 +1,12 @@
 <script lang="ts" setup>
 import { useSearchbar } from '@/composables/useSearchbar'
 import { searchProduct } from '@/api/queries'
-import {computed, watch} from 'vue'
+import { computed, watch } from 'vue'
+import { useRouter } from 'vue-router'
 
 const { searchQuery, hasSearchQuery, onSearch } = useSearchbar()
 const { data, isFetching, execute } = searchProduct(searchQuery)
+const router = useRouter()
 
 const searchResult = computed(() => {
   return data.value?.map(item => ({
@@ -24,10 +26,19 @@ watch(searchQuery, (value) => {
     data.value = []
   }
 })
+
+function onSelect(text: string, option: any) {
+  router.push({
+    name: 'product',
+    params: {
+      id: option.text
+    }
+  })
+}
 </script>
 
 <template>
-  <AAutoComplete :options="searchResult" :open="hasSearchQuery">
+  <AAutoComplete :options="searchResult" :open="hasSearchQuery" @select="onSelect">
     <AInputSearch v-model:value="searchQuery" placeholder="Find something" :loading="isFetching" />
   </AAutoComplete>
 </template>

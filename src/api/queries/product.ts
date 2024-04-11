@@ -11,6 +11,11 @@ export function fetchProducts() {
     }).json()
 }
 
+export function fetchProductById(id: number | string) {
+    return $api(`/products?id=eq.${id}`, {}).json<ProductItem[]>()
+}
+
+
 export function searchProduct(query: Ref<string>) {
     return $api<ProductItem[]>(() => `/products?name=ilike(any).{${query.value}*}`, {
         immediate: false
