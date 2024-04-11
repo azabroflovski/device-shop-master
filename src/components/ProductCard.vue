@@ -5,7 +5,7 @@ defineProps<{
 </script>
 
 <template>
-  <ACard hoverable class="product-card" bordered>
-    <ACardMeta :title="product.name" :description="product.category" />
+  <ACard class="product-card" hoverable bordered>
+    <ACardMeta :title="product.name" :description="product.displayPrice" />
   </ACard>
 </template>

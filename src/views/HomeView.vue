@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { $product } from '@/api/product'
+import { fetchProducts } from '@/api/queries'
 import ProductCard from '@/components/ProductCard.vue'
 
-const { data } = await $product.all()
+const { data } = await fetchProducts()
 </script>
 
 <template>
