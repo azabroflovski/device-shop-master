@@ -4,17 +4,12 @@ import AppHeader from '@/components/AppHeader.vue'
 </script>
 
 <template>
-  <Suspense>
-    <!-- Suspense need a single root  -->
-    <div id="#app">
-      <div class="container">
-        <AppHeader />
-        <RouterView style="padding: 24px" />
-      </div>
+  <div class="container">
+    <AppHeader />
+    <RouterView />
+  </div>
 
-      <AppFooter />
-    </div>
-  </Suspense>
+  <AppFooter />
 </template>
 
 <style>
