@@ -6,9 +6,6 @@ defineProps<{
 
 <template>
   <ACard hoverable class="product-card" bordered>
-    <template #cover>
-      <img :src="product.image" :alt="product.title">
-    </template>
     <ACardMeta :title="product.title" :description="product.category" />
   </ACard>
 </template>

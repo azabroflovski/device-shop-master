@@ -1,11 +1,8 @@
-import { supabase } from '@/shared/supabase-client'
+import { $api } from '@/api/client'
 
 class Product {
     async all() {
-        return supabase
-            .from('products')
-            .select('*')
-            .range(0, 9)
+        return $api('/products').json()
     }
 }
 
