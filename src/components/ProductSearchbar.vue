@@ -38,7 +38,7 @@ function onSelect(text: string, option: any) {
 </script>
 
 <template>
-  <AAutoComplete :options="searchResult" :open="hasSearchQuery" @select="onSelect">
+  <AAutoComplete :options="searchResult" @select="onSelect">
     <AInputSearch v-model:value="searchQuery" placeholder="Find something" :loading="isFetching" />
   </AAutoComplete>
 </template>
