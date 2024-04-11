@@ -6,6 +6,9 @@ interface ProductItem {
     description: string
     category: string
     price: number
-    displayPrice: string
     status: ProductStatus
+    created_at: string
+
+    displayPrice: string
+    displayCreatedAt: string
 }

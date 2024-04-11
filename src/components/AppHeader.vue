@@ -12,9 +12,9 @@ function goHome() {
 </script>
 
 <template>
-  <APageHeader>
+  <APageHeader class="app-header">
     <template #title>
-      <span @click="goHome">Device shop</span>
+      <span @click="goHome" class="app-header__logo">DEVICE SHOP</span>
     </template>
     <template #extra>
       <ProductSearchbar />
@@ -22,3 +22,10 @@ function goHome() {
     </template>
   </APageHeader>
 </template>
+
+<style>
+.app-header__logo {
+  font-weight: bold;
+  cursor: pointer;
+}
+</style>

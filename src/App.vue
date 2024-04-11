@@ -6,7 +6,7 @@ import AppHeader from '@/components/AppHeader.vue'
 <template>
   <div class="container">
     <AppHeader />
-    <RouterView />
+    <RouterView :key="$route.name" />
   </div>
 
   <AppFooter />

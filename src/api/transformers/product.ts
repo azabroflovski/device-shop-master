@@ -1,3 +1,4 @@
+import { formatTimeAgo } from '@vueuse/core'
 import { toPrice } from '@/utils/number'
 
 /**
@@ -7,6 +8,7 @@ import { toPrice } from '@/utils/number'
  */
 export function productTransformer(product: ProductItem): ProductItem {
     product.displayPrice = toPrice(product.price)
+    product.displayCreatedAt = formatTimeAgo(new Date(product.created_at))
 
     return product
 }

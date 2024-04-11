@@ -12,7 +12,12 @@ export function fetchProducts() {
 }
 
 export function fetchProductById(id: number | string) {
-    return $api(`/products?id=eq.${id}`, {}).json<ProductItem[]>()
+    return $api(`/products?id=eq.${id}`, {
+        afterFetch(ctx) {
+            ctx.data = ctx.data.map(productTransformer)
+            return ctx
+        }
+    }).json<ProductItem[]>()
 }
 
 
