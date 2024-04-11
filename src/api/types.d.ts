@@ -1,9 +1,10 @@
+type ProductStatus = 'draft' | 'published'
+
 interface ProductItem {
     id: number
-    title: string
+    name: string
     description: string
-    category: string,
+    category: string
     price: number
+    status: ProductStatus
 }
-
-

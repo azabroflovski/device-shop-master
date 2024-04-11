@@ -2,7 +2,7 @@ import { $api } from '@/api/client'
 
 class Product {
     async all() {
-        return $api('/products').json()
+        return $api<ProductItem>('/products').json()
     }
 }
 
