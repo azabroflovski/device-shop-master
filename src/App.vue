@@ -16,5 +16,10 @@ import AppHeader from '@/components/AppHeader.vue'
 .container {
   max-width: 680px;
   margin-inline: auto;
+  padding: 0 24px;
+}
+
+.container .ant-page-header {
+  padding-inline: 0;
 }
 </style>
