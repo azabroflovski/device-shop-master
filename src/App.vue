@@ -1,20 +1,18 @@
 <script setup lang="ts">
-
+import AppFooter from '@/components/AppFooter.vue'
+import AppHeader from '@/components/AppHeader.vue'
 </script>
 
 <template>
   <Suspense>
-    <div class="container">
-      <APageHeader title="Amazon">
-        <template #extra>
-          <AInputSearch placeholder="Find something" />
-          <AButton>Create</AButton>
-        </template>
-      </APageHeader>
+    <!-- Suspense need a single root  -->
+    <div id="#app">
+      <div class="container">
+        <AppHeader />
+        <RouterView style="padding: 24px" />
+      </div>
 
-      <RouterView style="padding: 24px" />
-
-      <ADivider style="font-size: 12px;">&copy; azabroflovski</ADivider>
+      <AppFooter />
     </div>
   </Suspense>
 </template>
