@@ -1,8 +1,16 @@
 <script lang="ts" setup>
-import { fetchProducts } from '@/api/queries'
 import ProductCard from '@/components/ProductCard.vue'
 
+import { fetchProducts } from '@/api/queries'
+import { useSearchbar } from '@/composables/useSearchbar'
+
 const { data, isFetching } = fetchProducts()
+const { onSearch } = useSearchbar()
+
+onSearch((searchQuery) => {
+  // TODO: implement searching
+  console.log(searchQuery)
+})
 </script>
 
 <template>
@@ -10,11 +18,11 @@ const { data, isFetching } = fetchProducts()
     <ASpin v-if="isFetching" />
   </AFlex>
 
-  <ARow v-if="data && data.length && !isFetching" :gutter="[16,16]">
+  <ARow v-if="data && data?.length && !isFetching" :gutter="[16,16]">
     <ACol v-for="item in data" :key="item.id" :span="8">
       <ProductCard :product="item"  />
     </ACol>
   </ARow>
 
-  <AEmpty v-if="!isFetching && !data.length" />
+  <AEmpty v-if="!isFetching && !data?.length" />
 </template>
