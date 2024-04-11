@@ -1,13 +1,11 @@
 <script lang="ts" setup>
-import { useSearchbar } from '@/composables/useSearchbar'
-
-const { searchQuery } = useSearchbar()
+import ProductSearchbar from '@/components/ProductSearchbar.vue'
 </script>
 
 <template>
   <APageHeader title="Device Shop">
     <template #extra>
-      <AInputSearch v-model:value="searchQuery" placeholder="Find something" />
+      <ProductSearchbar />
       <AButton>Login</AButton>
     </template>
   </APageHeader>

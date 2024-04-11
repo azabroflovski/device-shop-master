@@ -2,15 +2,7 @@
 import ProductCard from '@/components/ProductCard.vue'
 
 import { fetchProducts } from '@/api/queries'
-import { useSearchbar } from '@/composables/useSearchbar'
-
 const { data, isFetching } = fetchProducts()
-const { onSearch } = useSearchbar()
-
-onSearch((searchQuery) => {
-  // TODO: implement searching
-  console.log(searchQuery)
-})
 </script>
 
 <template>

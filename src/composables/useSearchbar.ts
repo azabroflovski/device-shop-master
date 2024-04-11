@@ -1,4 +1,4 @@
-import { ref, watch } from 'vue'
+import {computed, ref, watch} from 'vue'
 import { toRefs, useDebounceFn } from '@vueuse/core'
 import { createEventHook } from '@vueuse/core'
 
@@ -12,8 +12,11 @@ watch(() => state.value.searchQuery, useDebounceFn((query) => {
     onSearchHook.trigger(query)
 }, 300))
 
+const hasSearchQuery = computed(() => state.value.searchQuery.length > 0)
+
 export function useSearchbar() {
     return {
+        hasSearchQuery,
         onSearch: onSearchHook.on,
         ...toRefs(state),
     }
