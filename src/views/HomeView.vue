@@ -6,12 +6,15 @@ const { data, isFetching } = fetchProducts()
 </script>
 
 <template>
-  <ASpin v-if="isFetching" />
-  <ARow v-if="data && data.length" :gutter="[16,16]">
+  <AFlex justify="center" align="center" style="height: 100px;">
+    <ASpin v-if="isFetching" />
+  </AFlex>
+
+  <ARow v-if="data && data.length && !isFetching" :gutter="[16,16]">
     <ACol v-for="item in data" :key="item.id" :span="8">
       <ProductCard :product="item"  />
     </ACol>
   </ARow>
 
-  <AEmpty v-else />
+  <AEmpty v-if="!isFetching && !data.length" />
 </template>
