@@ -1,11 +1,19 @@
 <script setup lang="ts">
 import AppFooter from '@/components/AppFooter.vue'
 import AppHeader from '@/components/AppHeader.vue'
+import AuthActionsProvider from '@/components/providers/AuthActionsProvider.vue'
+import AuthProvider from '@/components/providers/AuthProvider.vue'
 </script>
 
 <template>
   <div class="container">
     <AppHeader />
+
+    <!-- Providers -->
+    <AuthProvider />
+    <AuthActionsProvider />
+    <!-- Providers -->
+
     <RouterView :key="$route.name" />
   </div>
 

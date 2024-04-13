@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { authGuard } from '@/router/guards/auth'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -9,9 +10,20 @@ const router = createRouter({
       component: () => import('@/views/HomeView.vue')
     },
     {
+      path: '/dashboard',
+      name: 'dashboard',
+      component: () => import('@/views/DashboardView.vue'),
+      beforeEnter: [authGuard]
+    },
+    {
       path: '/products/:id',
       name: 'product',
       component: () => import('@/views/ProductView.vue'),
+    },
+    {
+      path: '/logout',
+      name: 'logout',
+      component: () => import('@/views/LogoutView.vue'),
     },
     {
       path: '/:pathMatch(.*)*',
@@ -20,5 +32,6 @@ const router = createRouter({
     },
   ]
 })
+
 
 export default router

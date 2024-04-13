@@ -11,6 +11,23 @@ export function createApiClient() {
 
     return createFetch({
         baseUrl: apiUrl,
+        options: {
+          beforeFetch({ options }) {
+              const authToken = localStorage.getItem('authToken')
+
+              if (authToken) {
+                  options.headers = {
+                      Authorization: `Bearer ${authToken}`
+                  }
+              }
+          },
+          onFetchError(ctx) {
+              if (ctx.data.code === 'ERROR_CODE_TOO_MANY_REQUESTS') {
+                  alert(ctx.data.message)
+              }
+              return ctx
+          },
+        },
         fetchOptions: {
             headers: {
                 'apikey': apiKey

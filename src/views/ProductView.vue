@@ -1,22 +1,18 @@
 <script lang="ts" setup>
 import { fetchProductById } from '@/api/queries'
-import {computed, watch} from 'vue'
+import { watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 const route = useRoute()
 const router = useRouter()
-const { data, isFetching, execute, onFetchFinally, error } = fetchProductById(route.params.id as string)
-
-const product = computed(() => {
-  return data.value && data.value[0]
-})
+const { data: product, isFetching, execute, onFetchFinally, error } = fetchProductById(route.params.id as string)
 
 watch(() => route.params.id, () => {
   execute()
 })
 
 onFetchFinally(() => {
-  if (data.value?.length === 0 || error.value) {
+  if (!product.value || error.value) {
     router.push({
       name: '404'
     })

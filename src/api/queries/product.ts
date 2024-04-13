@@ -5,16 +5,16 @@ import type {Ref} from "vue";
 export function fetchProducts() {
     return $api<ProductItem>('/products', {
         afterFetch(ctx) {
-            ctx.data = ctx.data.map(productTransformer)
+            ctx.data = ctx.data?.items?.map(productTransformer)
             return ctx
         },
     }).json()
 }
 
 export function fetchProductById(id: number | string) {
-    return $api(`/products?id=eq.${id}`, {
+    return $api(`/products/${id}`, {
         afterFetch(ctx) {
-            ctx.data = ctx.data.map(productTransformer)
+            ctx.data = productTransformer(ctx.data)
             return ctx
         }
     }).json<ProductItem[]>()
