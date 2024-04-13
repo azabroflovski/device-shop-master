@@ -3,5 +3,13 @@ import AuthUserCard from '@/components/AuthUserCard.vue'
 </script>
 
 <template>
-  <AuthUserCard />
+  <section>
+    <ADivider>Your profile</ADivider>
+    <AuthUserCard />
+  </section>
+
+  <section>
+    <ADivider>Products</ADivider>
+    <!-- TODO: add products table   -->
+  </section>
 </template>
