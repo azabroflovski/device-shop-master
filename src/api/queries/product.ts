@@ -22,7 +22,7 @@ export function fetchProductById(id: number | string) {
 
 
 export function searchProduct(query: Ref<string>) {
-    return $api<ProductItem[]>(() => `/products?name=ilike(any).{${query.value}*}`, {
+    return $api<ProductItem[]>(() => `/products-search?query=${query.value}`, {
         immediate: false
     }).json<ProductItem[]>()
 }
