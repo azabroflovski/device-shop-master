@@ -30,6 +30,11 @@ function reset() {
   }
 }
 
+function letsGo() {
+  credentials.value.email = 'howard.wolowitz@gmail.com'
+  credentials.value.password = 'root'
+}
+
 async function handleLogin() {
   loading.value = true
   const success = await attemptLogin(credentials.value)
@@ -92,11 +97,15 @@ async function handleLogin() {
     <ADivider style="font-size: 12px;" />
 
     <ATypographyText type="secondary">
-      <div style="margin-bottom: 6px;">Demo credentials</div>
-      <div style="font-size: 12px;">
+      <AFlex justify="space-between">
+        <div style="margin-bottom: 6px;">Demo credentials</div>
+        <AButton @click="letsGo" size="small">Let's go</AButton>
+      </AFlex>
+      <div style="font-size: 12px; margin-bottom: 4px">
         <div><b>Email:</b> <strong>howard.wolowitz@gmail.com</strong></div>
         <div><b>Password:</b> <strong>root</strong></div>
       </div>
+
     </ATypographyText>
   </AModal>
 </template>
