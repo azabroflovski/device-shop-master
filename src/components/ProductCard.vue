@@ -4,6 +4,8 @@ import { MoreOutlined } from '@ant-design/icons-vue'
 
 interface Props {
   product: ProductItem
+  hideActions?: boolean
+  hideFooter?: boolean
 }
 
 defineProps<Props>()
@@ -15,7 +17,7 @@ defineProps<Props>()
       <template #title>
         <AFlex justify="space-between">
           <div style="font-size: 16px">{{ product.name }}</div>
-          <AButton shape="circle" size="small" type="text">
+          <AButton v-if="!hideActions" shape="circle" size="small" type="text">
             <template #icon>
               <MoreOutlined />
             </template>
@@ -25,7 +27,7 @@ defineProps<Props>()
 
       <template #description>
         <div>{{ product.displayPrice }}</div>
-        <AFlex justify="space-between" style="margin-top: 6px;">
+        <AFlex v-if="!hideFooter" justify="space-between" style="margin-top: 6px;">
           <ProductStatusLabel :status="product.status" />
           <div>added {{ product.displayCreatedAt }}</div>
         </AFlex>

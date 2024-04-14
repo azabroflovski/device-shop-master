@@ -36,7 +36,12 @@ function openProduct(id: number) {
 
   <ARow v-if="publishedProducts && publishedProducts?.length && !isFetching" :gutter="[16,16]">
     <ACol v-for="product in publishedProducts" :key="product.id" :span="12">
-      <ProductCard :product="product" @click="openProduct(product.id)" />
+      <ProductCard
+        @click="openProduct(product.id)"
+        :product="product"
+        hide-actions
+        hide-footer
+      />
     </ACol>
   </ARow>
 
