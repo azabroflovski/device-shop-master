@@ -11,7 +11,7 @@ interface FetchOptions {
 }
 
 export function fetchProducts(options?: ComputedRef<FetchOptions>) {
-    return $api<ProductItem>(() => '/products', {
+    return $api(() => '/products', {
         beforeFetch(ctx) {
             const url = new URLBuilder()
             if (options?.value?.query) {
@@ -24,7 +24,7 @@ export function fetchProducts(options?: ComputedRef<FetchOptions>) {
             ctx.data = ctx.data?.items?.map(productTransformer)
             return ctx
         },
-    }).json()
+    }).json<ProductItem>()
 }
 
 export function fetchProductById(id: number | string) {
