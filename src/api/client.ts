@@ -22,7 +22,7 @@ export function createApiClient() {
               }
           },
           onFetchError(ctx) {
-              if (ctx.data.code === 'ERROR_CODE_TOO_MANY_REQUESTS') {
+              if (ctx.data?.code === 'ERROR_CODE_TOO_MANY_REQUESTS') {
                   alert(ctx.data.message)
               }
               return ctx

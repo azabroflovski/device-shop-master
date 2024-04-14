@@ -16,6 +16,7 @@
   "dependencies": {
     "@formkit/auto-animate": "^0.8.2",
     "@supabase/supabase-js": "^2.42.0",
+    "@unhead/vue": "^1.9.5",
     "@vueuse/core": "^10.9.0",
     "ant-design-vue": "^4.1.2",
     "vue": "^3.4.21",

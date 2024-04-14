@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
+import ProductStatusLabel from "@/components/ProductStatusLabel.vue";
 
 interface Props {
   product: ProductItem
@@ -18,8 +19,7 @@ const status = computed(() => {
 <template>
   <ACard class="product-card" hoverable bordered>
     <ACardMeta :title="product.name" :description="product.displayPrice" />
-
-    <ABadge :status="status" :text="product.status" class="product-card__status" />
+    <ProductStatusLabel :status="product.status" class="product-card__status" />
   </ACard>
 </template>
 
@@ -27,11 +27,5 @@ const status = computed(() => {
 <style>
 .product-card__status {
   margin-top: 16px;
-}
-
-.product-card__status .ant-badge-status-text {
-  font-size: 12px !important;
-  color: #aaa !important;
-  text-transform: capitalize;
 }
 </style>

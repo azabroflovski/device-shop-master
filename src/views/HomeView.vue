@@ -2,9 +2,15 @@
 import ProductCard from '@/components/ProductCard.vue'
 
 import { useRouter } from 'vue-router'
+import { useHead } from '@unhead/vue'
 import { fetchProducts } from '@/api/queries'
+
 const router = useRouter()
 const { data, isFetching } = fetchProducts()
+
+useHead({
+  title: 'Home'
+})
 
 function openProduct(id: number) {
   router.push({

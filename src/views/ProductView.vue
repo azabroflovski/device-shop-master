@@ -1,11 +1,18 @@
 <script lang="ts" setup>
-import { fetchProductById } from '@/api/queries'
 import { watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useHead } from '@unhead/vue'
+
+import { fetchProductById } from '@/api/queries'
+import { safeTitle } from '@/utils/seo'
 
 const route = useRoute()
 const router = useRouter()
 const { data: product, isFetching, execute, onFetchFinally, error } = fetchProductById(route.params.id as string)
+
+useHead({
+  title: () => safeTitle(product.value?.name)
+})
 
 watch(() => route.params.id, () => {
   execute()

@@ -94,7 +94,7 @@ async function handleLogin() {
       </ATypographyText>
     </div>
 
-    <ADivider style="font-size: 12px;" />
+    <ADivider />
 
     <ATypographyText type="secondary">
       <AFlex justify="space-between">

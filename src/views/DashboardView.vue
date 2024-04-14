@@ -1,15 +1,21 @@
 <script lang="ts" setup>
 import AuthUserCard from '@/components/AuthUserCard.vue'
+import ProductsList from '@/components/ProductsList.vue'
+
+import { useHead } from '@unhead/vue'
+
+useHead({
+  title: 'Dashboard'
+})
 </script>
 
 <template>
   <section>
-    <ADivider>Your profile</ADivider>
+    <h3 style="margin-bottom: 10px">You profile</h3>
     <AuthUserCard />
   </section>
 
-  <section>
-    <ADivider>Products</ADivider>
-    <!-- TODO: add products table   -->
+  <section style="margin-top: 40px">
+    <ProductsList />
   </section>
 </template>
