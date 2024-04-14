@@ -1,12 +1,19 @@
 <script lang="ts" setup>
 import ProductCard from '@/components/ProductCard.vue'
 
+import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useHead } from '@unhead/vue'
 import { fetchProducts } from '@/api/queries'
 
 const router = useRouter()
 const { data, isFetching } = fetchProducts()
+
+// I didn't write my own backend.
+// I took a ready-made one, I was too lazy to do it on the side of the backend.
+const publishedProducts = computed(() => {
+  return data.value?.filter(product => product.status === 'published')
+})
 
 useHead({
   title: 'Home'
@@ -27,9 +34,9 @@ function openProduct(id: number) {
     <ASpin v-if="isFetching" />
   </AFlex>
 
-  <ARow v-if="data && data?.length && !isFetching" :gutter="[16,16]">
-    <ACol v-for="item in data" :key="item.id" :span="8">
-      <ProductCard :product="item" @click="openProduct(item.id)" />
+  <ARow v-if="publishedProducts && publishedProducts?.length && !isFetching" :gutter="[16,16]">
+    <ACol v-for="product in publishedProducts" :key="product.id" :span="12">
+      <ProductCard :product="product" @click="openProduct(product.id)" />
     </ACol>
   </ARow>
 

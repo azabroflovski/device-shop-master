@@ -24,7 +24,7 @@ export function fetchProducts(options?: ComputedRef<FetchOptions>) {
             ctx.data = ctx.data?.items?.map(productTransformer)
             return ctx
         },
-    }).json<ProductItem>()
+    }).json<ProductItem[]>()
 }
 
 export function fetchProductById(id: number | string) {
