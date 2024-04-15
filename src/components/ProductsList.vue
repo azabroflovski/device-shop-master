@@ -4,6 +4,7 @@ import ProductCard from '@/components/ProductCard.vue'
 import { computed, ref, watch } from 'vue'
 import { fetchProducts } from '@/api/queries'
 import CreateProductDialog from '@/components/CreateProductDialog.vue'
+import {$api} from "@/api/client";
 
 const productDialog = ref()
 const sort = ref('price=desc')
@@ -35,6 +36,22 @@ watch(queryOptions, () => {
   data.value = []
   execute()
 })
+
+async function productOptionHandler(key: string, product: ProductItem) {
+  if (key === 'edit') {
+    productDialog.value.open(product)
+  }
+
+  if (key ===  'delete') {
+    try {
+      await $api(`/products/${product.id}`).delete()
+      data.value = []
+      await execute() // renew products list
+    } catch (error) {
+      // send error to sentry/bugsnag/etc
+    }
+  }
+}
 </script>
 <template>
   <AFlex justify="space-between" align="center" style="margin-bottom: 16px">
@@ -56,6 +73,7 @@ watch(queryOptions, () => {
       :product="product"
       style="margin-bottom: 16px"
       @click="productDialog.open(product)"
+      @on-option-click="productOptionHandler"
     />
   </div>
 

@@ -48,6 +48,12 @@ export function updateProductRequest(payload: Ref<Partial<ProductItem>>) {
     }).patch(() => payload.value).json<ProductItem>()
 }
 
+export function deleteProductRequest(payload: Ref<Partial<ProductItem>>) {
+    return $api(() =>`/products/${payload.value.id}`, {
+        immediate: false
+    })
+}
+
 
 export function searchProduct(query: Ref<string>) {
     return $api<ProductItem[]>(() => `/products-search?query=${query.value}`, {

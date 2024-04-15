@@ -8,7 +8,19 @@ interface Props {
   hideFooter?: boolean
 }
 
-defineProps<Props>()
+type Emits = {
+  onOptionClick: [ key: 'edit' | 'delete', product: ProductItem]
+}
+
+const props = defineProps<Props>()
+const emit = defineEmits<Emits>()
+
+
+// NOTE: Ant design doest not expose types for this
+// i am use any for faster implementation
+function handleOptionsClick({ key }: any) {
+  emit('onOptionClick', key, props.product)
+}
 </script>
 
 <template>
@@ -17,11 +29,20 @@ defineProps<Props>()
       <template #title>
         <AFlex justify="space-between">
           <div style="font-size: 16px">{{ product.name }}</div>
-          <AButton v-if="!hideActions" shape="circle" size="small" type="text">
-            <template #icon>
-              <MoreOutlined />
+          <ADropdown trigger="click">
+            <AButton v-if="!hideActions" @click.stop="" shape="circle" size="small" type="text">
+              <template #icon>
+                <MoreOutlined />
+              </template>
+            </AButton>
+
+            <template #overlay>
+              <AMenu @click="handleOptionsClick">
+                <AMenuItem key="edit">Edit</AMenuItem>
+                <AMenuItem key="delete">Delete</AMenuItem>
+              </AMenu>
             </template>
-          </AButton>
+          </ADropdown>
         </AFlex>
       </template>
 
