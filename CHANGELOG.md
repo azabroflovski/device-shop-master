@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v0.0.4
+
+[compare changes](https://github.com-azabroflovski/azabroflovski/device-shop-master/compare/v0.0.3...v0.0.4)
+
+### 🚀 Enhancements
+
+- Customize alert when request limit handled (4a7005f)
+
+### 🎨 Styles
+
+- Reformat code (c21962e)
+
+### ❤️ Contributors
+
+- Azabroflovski <azabroflovski@gmail.com>
+
 ## v0.0.3
 
 [compare changes](https://github.com-azabroflovski/azabroflovski/device-shop-master/compare/v0.0.2...v0.0.3)
