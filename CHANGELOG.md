@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.0.3
+
+[compare changes](https://github.com-azabroflovski/azabroflovski/device-shop-master/compare/v0.0.2...v0.0.3)
+
+### 🩹 Fixes
+
+- **vite:** Correct base parameter (for github pages) (706a014)
+
+### ❤️ Contributors
+
+- Azabroflovski <azabroflovski@gmail.com>
+
 ## v0.0.2
 
 [compare changes](https://github.com-azabroflovski/azabroflovski/device-shop-master/compare/v0.0.1...v0.0.2)
