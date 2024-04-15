@@ -1,5 +1,6 @@
 import { createFetch } from '@vueuse/core'
 import { env } from '@/utils/env'
+import { alertBus } from '@/shared/alert-bus'
 
 export function createApiClient() {
     const apiUrl = env('API_URL', '')
@@ -23,7 +24,10 @@ export function createApiClient() {
           },
           onFetchError(ctx) {
               if (ctx.data?.code === 'ERROR_CODE_TOO_MANY_REQUESTS') {
-                  alert(ctx.data.message)
+                  alertBus.emit('REQUEST_LIMIT_ERROR', {
+                      title: 'ERROR_CODE_TOO_MANY_REQUESTS',
+                      description: ctx.data.message
+                  })
               }
               return ctx
           },

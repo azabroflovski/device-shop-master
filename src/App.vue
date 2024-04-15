@@ -3,6 +3,7 @@ import AppFooter from '@/components/AppFooter.vue'
 import AppHeader from '@/components/AppHeader.vue'
 import AuthActionsProvider from '@/components/providers/AuthActionsProvider.vue'
 import AuthProvider from '@/components/providers/AuthProvider.vue'
+import AlertProvider from '@/components/providers/AlertProvider.vue'
 </script>
 
 <template>
@@ -12,6 +13,7 @@ import AuthProvider from '@/components/providers/AuthProvider.vue'
     <!-- Providers -->
     <AuthProvider />
     <AuthActionsProvider />
+    <AlertProvider />
     <!-- Providers -->
 
     <RouterView :key="$route.name" />
