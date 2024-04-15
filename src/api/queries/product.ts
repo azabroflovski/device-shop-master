@@ -36,6 +36,18 @@ export function fetchProductById(id: number | string) {
     }).json<ProductItem[]>()
 }
 
+export function createProductRequest(payload: Ref<Partial<ProductItem>>) {
+    return $api(`/products`, {
+        immediate: false
+    }).post(() => payload.value).json<ProductItem>()
+}
+
+export function updateProductRequest(payload: Ref<Partial<ProductItem>>) {
+    return $api(() =>`/products/${payload.value.id}`, {
+        immediate: false
+    }).patch(() => payload.value).json<ProductItem>()
+}
+
 
 export function searchProduct(query: Ref<string>) {
     return $api<ProductItem[]>(() => `/products-search?query=${query.value}`, {

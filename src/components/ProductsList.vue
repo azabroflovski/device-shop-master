@@ -3,7 +3,9 @@ import ProductCard from '@/components/ProductCard.vue'
 
 import { computed, ref, watch } from 'vue'
 import { fetchProducts } from '@/api/queries'
+import CreateProductDialog from '@/components/CreateProductDialog.vue'
 
+const productDialog = ref()
 const sort = ref('price=desc')
 const sortingOptions = [
   {
@@ -41,7 +43,9 @@ watch(queryOptions, () => {
     <AFlex gap="12">
       <ASelect v-model:value="sort" placeholder="Sorting" :options="sortingOptions" style="width: 150px" />
       <AInputSearch placeholder="Filter" style="width: 200px" />
-      <AButton>Add</AButton>
+      <AButton @click="productDialog.open()">
+        Add
+      </AButton>
     </AFlex>
   </AFlex>
 
@@ -51,10 +55,13 @@ watch(queryOptions, () => {
       :key="product.id"
       :product="product"
       style="margin-bottom: 16px"
+      @click="productDialog.open(product)"
     />
   </div>
 
   <AFlex v-if="isFetching">
     <ASkeleton active />
   </AFlex>
+
+  <CreateProductDialog ref="productDialog" @on-created="execute" />
 </template>
