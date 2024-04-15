@@ -34,11 +34,17 @@ onFetchFinally(() => {
     <ABreadcrumbItem>
       <RouterLink :to="{ name: 'home' }">Products</RouterLink>
     </ABreadcrumbItem>
-    <ABreadcrumbItem>{{ product.name }}</ABreadcrumbItem>
+    <ABreadcrumbItem>
+      {{ product.name }}
+    </ABreadcrumbItem>
   </ABreadcrumb>
 
   <ACard v-if="product" style="margin-top: 16px;">
-    <ACardMeta :title="product.name" :description="product.description" style="margin-bottom: 16px;" />
+    <ACardMeta
+      :title="product.name"
+      :description="product.description"
+      style="margin-bottom: 16px;"
+    />
 
     <ADivider />
 

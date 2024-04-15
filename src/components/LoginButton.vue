@@ -25,6 +25,9 @@ const buttonLabel = computed(() => {
 </script>
 
 <template>
-  <AButton :key="buttonLabel" @click="loginOrDashboard">{{ buttonLabel }}</AButton>
+  <AButton :key="buttonLabel" @click="loginOrDashboard">
+    {{ buttonLabel }}
+  </AButton>
+
   <LoginDialog v-model:show="showLoginDialog" />
 </template>

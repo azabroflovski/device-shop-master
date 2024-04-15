@@ -30,7 +30,13 @@ function handleOptionsClick({ key }: any) {
         <AFlex justify="space-between">
           <div style="font-size: 16px">{{ product.name }}</div>
           <ADropdown trigger="click">
-            <AButton v-if="!hideActions" @click.stop="" shape="circle" size="small" type="text">
+            <AButton
+              v-if="!hideActions"
+              @click.stop=""
+              shape="circle"
+              size="small"
+              type="text"
+            >
               <template #icon>
                 <MoreOutlined />
               </template>

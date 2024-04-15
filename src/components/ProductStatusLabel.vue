@@ -27,7 +27,7 @@ const badgeTip = computed(() => {
 
 <template>
   <ATooltip :title="badgeTip" placement="right">
-    <ABadge class="product-status" :status="badgeStatus" :text="status" />
+    <ABadge :status="badgeStatus" :text="status" class="product-status"  />
   </ATooltip>
 </template>
 

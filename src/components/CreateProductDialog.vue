@@ -1,10 +1,6 @@
 <script lang="ts" setup>
-import {computed, ref, watch, getCurrentInstance, nextTick} from 'vue'
+import { computed, ref, watch, getCurrentInstance } from 'vue'
 import { createProductRequest, updateProductRequest } from '@/api/queries'
-
-interface Props {
-  product?: ProductItem
-}
 
 type Emits = {
   onCreated: [product: ProductItem]
@@ -127,30 +123,33 @@ async function createOrSave() {
 
 <template>
   <AModal
-      v-model:open="show"
-      title="New product"
-      :ok-text="okText"
-      @ok="createOrSave"
-      width="340px"
-      :confirm-loading="loading"
+    v-model:open="show"
+    title="New product"
+    :ok-text="okText"
+    @ok="createOrSave"
+    width="340px"
+    :confirm-loading="loading"
   >
     <AForm
-        layout="vertical"
-        @submit="createOrSave"
-        :disabled="loading"
-        style="margin-top: 26px;"
+      layout="vertical"
+      @submit="createOrSave"
+      :disabled="loading"
+      style="margin-top: 26px;"
     >
-
       <AFlex gap="12">
         <AFormItem label="Name">
           <AInput
-              v-model:value="model.name"
-              placeholder="Pixel 7"
+            v-model:value="model.name"
+            placeholder="Pixel 7"
           />
         </AFormItem>
 
         <AFormItem label="Price">
-          <AInputNumber v-model:value.number="model.price" placeholder="Enter amount" :controls="false">
+          <AInputNumber
+            v-model:value.number="model.price"
+            placeholder="Enter amount"
+            :controls="false"
+          >
             <template #addonAfter>
               USD
             </template>
@@ -159,11 +158,18 @@ async function createOrSave() {
       </AFlex>
 
       <AFormItem label="Category">
-        <ASelect v-model:value="model.category" :options="categories" placeholder="Type of device" />
+        <ASelect
+          v-model:value="model.category"
+          :options="categories"
+          placeholder="Type of device"
+        />
       </AFormItem>
 
       <AFormItem label="Description">
-        <ATextarea v-model:value="model.description" placeholder="Tell about device" />
+        <ATextarea
+          v-model:value="model.description"
+          placeholder="Tell about device"
+        />
       </AFormItem>
 
        <AFormItem label="Status">

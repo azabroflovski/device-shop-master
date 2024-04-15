@@ -101,11 +101,11 @@ async function handleLogin() {
         <div style="margin-bottom: 6px;">Demo credentials</div>
         <AButton @click="letsGo" size="small">Let's go</AButton>
       </AFlex>
+
       <div style="font-size: 12px; margin-bottom: 4px">
         <div><b>Email:</b> <strong>howard.wolowitz@gmail.com</strong></div>
         <div><b>Password:</b> <strong>root</strong></div>
       </div>
-
     </ATypographyText>
   </AModal>
 </template>

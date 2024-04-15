@@ -27,6 +27,14 @@ function openProduct(id: number) {
     }
   })
 }
+
+const hasProducts = computed(() => {
+  return publishedProducts.value && publishedProducts.value?.length && !isFetching.value
+})
+
+const isEmpty = computed(() => {
+  return !isFetching.value && !data.value?.length
+})
 </script>
 
 <template>
@@ -34,7 +42,7 @@ function openProduct(id: number) {
     <ASpin v-if="isFetching" />
   </AFlex>
 
-  <ARow v-if="publishedProducts && publishedProducts?.length && !isFetching" :gutter="[16,16]">
+  <ARow v-if="hasProducts" :gutter="[16,16]">
     <ACol v-for="product in publishedProducts" :key="product.id" :span="12">
       <ProductCard
         @click="openProduct(product.id)"
@@ -45,5 +53,5 @@ function openProduct(id: number) {
     </ACol>
   </ARow>
 
-  <AEmpty v-if="!isFetching && !data?.length" />
+  <AEmpty v-if="isEmpty" />
 </template>

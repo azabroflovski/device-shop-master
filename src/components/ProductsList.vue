@@ -68,11 +68,13 @@ const fetchingEmpty = computed(() => {
     <h3>Products <ASpin v-if="fetchingWithData" style="margin-left: 16px" /></h3>
 
     <AFlex gap="12">
-      <ASelect v-model:value="sort" placeholder="Sorting" :options="sortingOptions" style="width: 150px" />
+      <ASelect
+        v-model:value="sort"
+        placeholder="Sorting"
+        :options="sortingOptions" style="width: 150px"
+      />
       <AInputSearch placeholder="Filter" style="width: 200px" />
-      <AButton @click="productDialog.open()">
-        Add
-      </AButton>
+      <AButton @click="productDialog.open()">Add</AButton>
     </AFlex>
   </AFlex>
 
