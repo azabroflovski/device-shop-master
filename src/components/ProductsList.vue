@@ -4,7 +4,7 @@ import ProductCard from '@/components/ProductCard.vue'
 import { computed, ref, watch } from 'vue'
 import { fetchProducts } from '@/api/queries'
 import CreateProductDialog from '@/components/CreateProductDialog.vue'
-import {$api} from "@/api/client";
+import { $api } from '@/api/client'
 
 const productDialog = ref()
 const sort = ref('price=desc')
@@ -42,10 +42,9 @@ async function productOptionHandler(key: string, product: ProductItem) {
     productDialog.value.open(product)
   }
 
-  if (key ===  'delete') {
+  if (key === 'delete') {
     try {
       await $api(`/products/${product.id}`).delete()
-      data.value = []
       await execute() // renew products list
     } catch (error) {
       // send error to sentry/bugsnag/etc
@@ -66,7 +65,7 @@ async function productOptionHandler(key: string, product: ProductItem) {
     </AFlex>
   </AFlex>
 
-  <div>
+  <div v-auto-animate>
     <ProductCard
       v-for="product in data"
       :key="product.id"
@@ -77,9 +76,14 @@ async function productOptionHandler(key: string, product: ProductItem) {
     />
   </div>
 
-  <AFlex v-if="isFetching">
+  <AFlex v-if="isFetching && !data">
     <ASkeleton active />
   </AFlex>
+
+  <AEmpty
+    v-if="!isFetching && !data?.length"
+    style="margin-top: 30px;"
+  />
 
   <CreateProductDialog ref="productDialog" @on-created="execute" />
 </template>

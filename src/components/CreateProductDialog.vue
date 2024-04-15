@@ -91,6 +91,8 @@ function reset() {
 }
 
 function handlerFactory(product: ProductItem) {
+  loading.value = true
+
   if (product?.id) {
     show.value = false
     reset()
