@@ -33,7 +33,6 @@ const queryOptions = computed(() => {
 const { isFetching, data, execute } = fetchProducts(queryOptions)
 
 watch(queryOptions, () => {
-  data.value = []
   execute()
 })
 
@@ -51,10 +50,22 @@ async function productOptionHandler(key: string, product: ProductItem) {
     }
   }
 }
+
+const fetchingWithData = computed(() => {
+  return isFetching.value && data.value?.length
+})
+
+const fetchingWithoutData = computed(() => {
+  return isFetching.value && !data.value
+})
+
+const fetchingEmpty = computed(() => {
+  return !isFetching.value && !data.value?.length
+})
 </script>
 <template>
   <AFlex justify="space-between" align="center" style="margin-bottom: 16px">
-    <h3>Products</h3>
+    <h3>Products <ASpin v-if="fetchingWithData" style="margin-left: 16px" /></h3>
 
     <AFlex gap="12">
       <ASelect v-model:value="sort" placeholder="Sorting" :options="sortingOptions" style="width: 150px" />
@@ -76,12 +87,12 @@ async function productOptionHandler(key: string, product: ProductItem) {
     />
   </div>
 
-  <AFlex v-if="isFetching && !data">
+  <AFlex v-if="fetchingWithoutData">
     <ASkeleton active />
   </AFlex>
 
   <AEmpty
-    v-if="!isFetching && !data?.length"
+    v-if="fetchingEmpty"
     style="margin-top: 30px;"
   />
 
