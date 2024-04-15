@@ -1,6 +1,20 @@
 # Changelog
 
 
+## v0.0.2
+
+[compare changes](https://github.com-azabroflovski/azabroflovski/device-shop-master/compare/v0.0.1...v0.0.2)
+
+### 🏡 Chore
+
+- **ci:** Deploy to github pages (a64b3f4)
+- Disable typecheck (sorry, времени нету) (37f1a24)
+
+### ❤️ Contributors
+
+- Azabroflovski <azabroflovski@gmail.com>
+- Aza Broflovski ([@azabroflovski](http://github.com/azabroflovski))
+
 ## v0.0.1
 
 
