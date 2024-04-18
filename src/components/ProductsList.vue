@@ -1,10 +1,12 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
+import { FilterOutlined } from '@ant-design/icons-vue'
 import ProductCard from '@/components/ProductCard.vue'
 import CreateProductDialog from '@/components/CreateProductDialog.vue'
 
 import { destroyProduct } from '@/api/queries'
 import { useProductsApi } from '@/composables/useProductsApi'
+import ProductFilters from '@/components/ProductFilters.vue'
 
 const productDialog = ref()
 
@@ -58,12 +60,26 @@ async function callProductOption(key: 'edit' | 'delete', product: ProductItem) {
         placeholder="Sorting"
         :options="sortingOptions" style="width: 150px"
       />
+
       <AInputSearch placeholder="Filter" style="width: 200px" />
+
+      <ATooltip title="Show filters">
+        <AButton>
+          <template #icon>
+            <FilterOutlined />
+          </template>
+        </AButton>
+      </ATooltip>
+
       <AButton @click="productDialog.open()">
         Add
       </AButton>
     </AFlex>
   </AFlex>
+
+  <div v-auto-animate style="margin-bottom: 26px">
+    <ProductFilters />
+  </div>
 
   <div v-auto-animate>
     <ProductCard
