@@ -1,33 +1,23 @@
 <script lang="ts" setup>
 import ProductCard from '@/components/ProductCard.vue'
-
-import { computed, ref, watch } from 'vue'
-import { getProducts, destroyProduct } from '@/api/queries'
-import { sortingConfig } from '@/config/dashboard'
 import CreateProductDialog from '@/components/CreateProductDialog.vue'
-import { useAsyncState } from '@vueuse/core'
+
+import { ref } from 'vue'
+import { destroyProduct } from '@/api/queries'
+import { useProductsApi } from '@/composables/useProductsApi'
 
 const productDialog = ref()
-const sort = ref(sortingConfig.default)
-const sortingOptions = sortingConfig.options
 
-const queryParams = computed(() => {
-  return {
-    _sort: sort.value,
-  }
-})
+const {
+  data,
+  sort,
+  sortingOptions,
+  isLoadingWithoutData,
+  isLoadingWithData,
+  isEmpty,
+  refetchProducts
+} = useProductsApi()
 
-const { state: response, isLoading, execute: refetchProducts } = useAsyncState(() => getProducts({
-  params: queryParams.value
-}), null, { resetOnExecute: false })
-
-const data = computed(() => {
-  return response.value?.data
-})
-
-watch(queryParams, () => {
-  refetchProducts()
-})
 
 const productOptionHandlers = {
   async edit(product: ProductItem) {
@@ -53,18 +43,6 @@ async function callProductOption(key: 'edit' | 'delete', product: ProductItem) {
     }
   }
 }
-
-const isLoadingWithData = computed(() => {
-  return isLoading.value && data.value?.length
-})
-
-const isLoadingWithoutData = computed(() => {
-  return isLoading.value && !data.value
-})
-
-const isEmpty = computed(() => {
-  return !isLoading.value && !data.value?.length
-})
 </script>
 <template>
   <AFlex justify="space-between" align="center" style="margin-bottom: 16px">
