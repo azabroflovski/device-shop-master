@@ -1,93 +1,65 @@
 import { $api } from '@/api/client'
 import { productTransformer } from '@/api/transformers'
-import type { ComputedRef, Ref } from 'vue'
-import { URLBuilder } from '@/utils/url'
+import type { AxiosResponse, AxiosRequestConfig } from 'axios'
 
 /**
- * Interface for specifying fetch options.
+ * Retrieves a list of products.
+ * @param {AxiosRequestConfig} options - Options for the request.
+ * @returns {Promise<AxiosResponse<ProductItem[]>>} A promise that resolves with the response data.
  */
-interface FetchOptions {
-    query: {
-        [key: string]: any
-    }
+export function getProducts(options: AxiosRequestConfig = {}) {
+    return $api.get<ProductItem[]>('/products', {
+        transformResponse: productTransformer,
+        ...options
+    })
 }
 
 /**
- * Fetches products from the API based on the provided options.
- * @param {ComputedRef<FetchOptions>} [options] - Optional computed reference containing fetch options.
- * @returns {Promise<ProductItem[]>} A promise that resolves with an array of product items.
+ * Finds a product by its ID.
+ * @param {number} id - The ID of the product to find.
+ * @param {AxiosRequestConfig} options - Options for the request.
+ * @returns {Promise<AxiosResponse<ProductItem[]>>} A promise that resolves with the response data.
  */
-export function fetchProducts(options?: ComputedRef<FetchOptions>) {
-    return $api(() => '/products', {
-        beforeFetch(ctx) {
-            const url = new URLBuilder()
-            if (options?.value?.query) {
-                url.setQueryParams(options?.value?.query)
-                ctx.url += url.build()
-                return ctx
-            }
-        },
-        afterFetch(ctx) {
-            ctx.data = ctx.data?.items?.map(productTransformer)
-            return ctx
-        },
-    }).json<ProductItem[]>()
+export async function findProduct(id: number, options: AxiosRequestConfig = {}) {
+    return $api.get<ProductItem[]>(`/products/${id}`, {
+        transformResponse: productTransformer,
+        ...options
+    })
 }
 
 /**
- * Fetches a product by its ID from the API.
- * @param {number | string} id - The ID of the product to fetch.
- * @returns {Promise<ProductItem>} A promise that resolves with the fetched product item.
+ * Stores a new product.
+ * @param {Partial<ProductItem>} payload - The data of the product to store.
+ * @param {AxiosRequestConfig} options - Options for the request.
+ * @returns {Promise<AxiosResponse>} A promise that resolves with the response data.
  */
-export function fetchProductById(id: number | string) {
-    return $api(`/products/${id}`, {
-        afterFetch(ctx) {
-            ctx.data = productTransformer(ctx.data)
-            return ctx
-        }
-    }).json<ProductItem[]>()
+export async function storeProduct(payload: Partial<ProductItem>, options: AxiosRequestConfig = {}) {
+    return $api.post('/products', payload, {
+        ...options
+    })
 }
 
 /**
- * Creates a request to create a new product.
- * @param {Ref<Partial<ProductItem>>} payload - The payload containing the data for the new product.
- * @returns {Promise<ProductItem>} A promise that resolves with the created product item.
+ * Updates an existing product.
+ * @param {Partial<ProductItem>} payload - The data of the product to update.
+ * @returns {Promise<AxiosResponse<ProductItem>>} A promise that resolves with the response data.
  */
-export function createProductRequest(payload: Ref<Partial<ProductItem>>) {
-    return $api(`/products`, {
-        immediate: false
-    }).post(() => payload.value).json<ProductItem>()
-}
-
-/**
- * Creates a request to update an existing product.
- * @param {Ref<Partial<ProductItem>>} payload - The payload containing the data for the product to update.
- * @returns {Promise<ProductItem>} A promise that resolves with the updated product item.
- */
-export function updateProductRequest(payload: Ref<Partial<ProductItem>>) {
-    return $api(() =>`/products/${payload.value.id}`, {
-        immediate: false
-    }).patch(() => payload.value).json<ProductItem>()
-}
-
-/**
- * Creates a request to delete an existing product.
- * @param {Ref<Partial<ProductItem>>} payload - The payload containing the data for the product to delete.
- * @returns {Promise<void>} A promise that resolves once the product is deleted.
- */
-export function deleteProductRequest(payload: Ref<Partial<ProductItem>>) {
-    return $api(() =>`/products/${payload.value.id}`, {
+export function updateProduct(payload: Partial<ProductItem>) {
+    return $api.patch<ProductItem>(`/products/${payload.id}`, {
         immediate: false
     })
 }
 
 /**
- * Searches for products based on a query string.
- * @param {Ref<string>} query - The query string to search for.
- * @returns {Promise<ProductItem[]>} A promise that resolves with an array of product items matching the search query.
+ * Deletes a product.
+ * @param {Partial<ProductItem>} payload - The data of the product to delete.
+ * @returns {Promise<AxiosResponse>} A promise that resolves with the response data.
  */
-export function searchProduct(query: Ref<string>) {
-    return $api<ProductItem[]>(() => `/products-search?query=${query.value}`, {
-        immediate: false
-    }).json<ProductItem[]>()
+export async function destroyProduct(payload: Partial<ProductItem>) {
+    return $api.delete(`/products/${payload.id}`)
+}
+
+
+export async function searchProduct(keyword: string) {
+    return $api.get<ProductItem[]>(`/products?query=${keyword}`)
 }

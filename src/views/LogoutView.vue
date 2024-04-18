@@ -1,17 +1,21 @@
 <script lang="ts" setup>
 import { useAuth } from '@/composables/useAuth'
 import { useRouter } from 'vue-router'
+import { onMounted } from 'vue'
+import { logoutDelay } from '@/config/auth'
 
 const router = useRouter()
 const { logout } = useAuth()
 
-setTimeout(() => {
+onMounted(() => {
   logout()
 
-  router.push({
-    name: 'home'
-  })
-}, 3000)
+  setTimeout(() => {
+    router.push({
+      name: 'home'
+    })
+  }, logoutDelay)
+})
 </script>
 
 <template>

@@ -64,17 +64,10 @@ function authComposable() {
         state.value.user = null
     }
 
-    async function logoutWithRedirect(delay: number = 3000) {
+    async function logoutWithRedirect() {
         await router.push({
             name: 'logout'
         })
-        await logout()
-
-        setTimeout(async () => {
-            await router.push({
-                name: 'home'
-            })
-        }, delay)
     }
 
     return {

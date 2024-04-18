@@ -1,43 +1,42 @@
-import { createFetch } from '@vueuse/core'
+import axios from 'axios'
 import { env } from '@/utils/env'
 import { alertBus } from '@/shared/alert-bus'
 
 export function createApiClient() {
-    const apiUrl = env('API_URL', '')
-    const apiKey = env('API_KEY', '')
+    const apiURL = env('API_URL', '')
 
-    if (!apiUrl && !apiKey) {
-        throw 'API_URL and API_KEY not defined in environment variables'
+    if (!apiURL) {
+        throw 'API_URL is not defined in environment variables'
     }
 
-    return createFetch({
-        baseUrl: apiUrl,
-        options: {
-          beforeFetch({ options }) {
-              const authToken = localStorage.getItem('authToken')
-
-              if (authToken) {
-                  options.headers = {
-                      Authorization: `Bearer ${authToken}`
-                  }
-              }
-          },
-          onFetchError(ctx) {
-              if (ctx.data?.code === 'ERROR_CODE_TOO_MANY_REQUESTS') {
-                  alertBus.emit('REQUEST_LIMIT_ERROR', {
-                      title: 'ERROR_CODE_TOO_MANY_REQUESTS',
-                      description: ctx.data.message
-                  })
-              }
-              return ctx
-          },
-        },
-        fetchOptions: {
-            headers: {
-                'apikey': apiKey
-            }
-        }
+    const $api =  axios.create({
+        baseURL: apiURL
     })
+
+    $api.interceptors.request.use((config) => {
+        const authToken = localStorage.getItem('authToken')
+
+        if (authToken) {
+            config.headers.set('Authorization', `Bearer ${authToken}`)
+        }
+
+        return config
+    })
+
+    $api.interceptors.response.use((response) => {
+        if (response.data?.code === 'ERROR_CODE_TOO_MANY_REQUESTS') {
+            alertBus.emit('REQUEST_LIMIT_ERROR', {
+                title: 'ERROR_CODE_TOO_MANY_REQUESTS',
+                description: response.data.message
+            })
+        }
+
+        return response
+    }, (error) => {
+        return Promise.reject(error)
+    })
+
+    return $api
 }
 
 export const $api = createApiClient()

@@ -1,11 +1,15 @@
 <script lang="ts" setup>
+import { useAsyncState } from '@vueuse/core'
 import { useSearchbar } from '@/composables/useSearchbar'
 import { searchProduct } from '@/api/queries'
 import { computed, watch } from 'vue'
 import { useRouter } from 'vue-router'
 
 const { searchQuery, hasSearchQuery, onSearch } = useSearchbar()
-const { data, isFetching, execute } = searchProduct(searchQuery)
+const { state: data, isLoading, execute } = useAsyncState(() => searchProduct(searchQuery.value),[], {
+  immediate: false
+})
+
 const router = useRouter()
 
 const searchResult = computed(() => {
@@ -42,7 +46,7 @@ function onSelect(text: string, option: any) {
     <AInputSearch
       v-model:value="searchQuery"
       placeholder="Find something"
-      :loading="isFetching"
+      :loading="isLoading"
     />
   </AAutoComplete>
 </template>
