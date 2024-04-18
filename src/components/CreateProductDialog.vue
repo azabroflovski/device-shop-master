@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { computed, getCurrentInstance, ref, watch } from 'vue'
 import { storeProduct, updateProduct } from '@/api/queries'
+import { categoriesConfig, defaultModel } from '@/config/product'
 
 const emit = defineEmits<{
   onSuccess: [product?: ProductItem]
@@ -9,7 +10,7 @@ const emit = defineEmits<{
 const vm = getCurrentInstance()
 const show = defineModel('open')
 
-const model = ref<Partial<ProductItem>>(defaultModel())
+const model = ref<Partial<ProductItem>>(defaultModel() as ProductItem)
 const loading = ref(false)
 const hasError = ref(false)
 
@@ -34,31 +35,6 @@ defineExpose({
   close,
 })
 
-const categories = [
-  {
-    label: 'Phones',
-    value: 'phones',
-  },
-  {
-    label: 'Tablets',
-    value: 'tablet',
-  },
-  {
-    label: 'Laptops',
-    value: 'laptops',
-  },
-]
-
-function defaultModel(): ProductItem {
-  return {
-    name: '',
-    category: 'phones',
-    description: '',
-    price: 0,
-    status: 'draft',
-  }
-}
-
 function open(product?: ProductItem) {
   vm?.proxy?.$forceUpdate()
 
@@ -75,7 +51,7 @@ function close() {
 function reset() {
   loading.value = false
   hasError.value = false
-  model.value = defaultModel()
+  model.value = defaultModel() as ProductItem
 }
 
 function resetWithSuccess() {
@@ -150,7 +126,7 @@ async function createOrSave() {
       <AFormItem label="Category">
         <ASelect
           v-model:value="model.category"
-          :options="categories"
+          :options="categoriesConfig.categories"
           placeholder="Type of device"
         />
       </AFormItem>
