@@ -1,14 +1,27 @@
 <script lang="ts" setup>
-import { watch } from 'vue'
+import {computed, watch} from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useHead } from '@unhead/vue'
+import { useAsyncState } from '@vueuse/core'
 
-import { fetchProductById } from '@/api/queries'
+import { findProduct } from '@/api/queries'
 import { safeTitle } from '@/utils/seo'
 
 const route = useRoute()
 const router = useRouter()
-const { data: product, isFetching, execute, onFetchFinally, error } = fetchProductById(route.params.id as string)
+
+const { state: response, isLoading, execute } = useAsyncState(() => findProduct(+route.params.id), null, {
+  onError() {
+    router.push({
+      name: '404'
+    })
+  },
+})
+
+const product = computed(() => {
+  return response.value?.data
+})
+
 
 useHead({
   title: () => safeTitle(product.value?.name)
@@ -17,18 +30,10 @@ useHead({
 watch(() => route.params.id, () => {
   execute()
 })
-
-onFetchFinally(() => {
-  if (!product.value || error.value) {
-    router.push({
-      name: '404'
-    })
-  }
-})
 </script>
 
 <template>
-  <ASkeleton v-if="isFetching" active />
+  <ASkeleton v-if="isLoading" active />
 
   <ABreadcrumb v-if="product">
     <ABreadcrumbItem>

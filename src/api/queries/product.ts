@@ -24,7 +24,7 @@ export function getProducts(options: AxiosRequestConfig = {}) {
  * @returns {Promise<AxiosResponse<ProductItem[]>>} A promise that resolves with the response data.
  */
 export async function findProduct(id: number, options: AxiosRequestConfig = {}) {
-    return $api.get<ProductItem[]>(`/products/${id}`, {
+    return $api.get<ProductItem>(`/products/${id}`, {
         transformResponse: productTransformer,
         ...options
     })
