@@ -22,7 +22,7 @@
     "@vueuse/core": "^10.9.0",
     "ant-design-vue": "^4.1.2",
     "axios": "^1.6.8",
-    "json-server": "^0.17.4",
+    "json-server": "0.17.4",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0"
   },

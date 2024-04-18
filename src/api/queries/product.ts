@@ -61,6 +61,6 @@ export async function destroyProduct(id: number) {
   return $api.delete(`/products/${id}`)
 }
 
-export async function searchProduct(keyword: string) {
-  return $api.get<ProductItem[]>(`/products?query=${keyword}`)
+export async function searchProduct(query: string) {
+  return $api.get<ProductItem[]>(`/products?name_like=${query}`)
 }
