@@ -10,8 +10,9 @@ import { safeTitle } from '@/utils/seo'
 const route = useRoute()
 const router = useRouter()
 
-const { state: response, isLoading, execute } = useAsyncState(() => findProduct(+route.params.id), null, {
+const { state: response, isLoading, execute } = useAsyncState(() => findProduct(route.params.id as string), null, {
   onError() {
+    // send error to sentry/bugsnag
     router.push({
       name: '404',
     })

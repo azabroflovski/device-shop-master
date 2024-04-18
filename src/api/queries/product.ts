@@ -23,7 +23,7 @@ export function getProducts(options: AxiosRequestConfig = {}) {
  * @param {AxiosRequestConfig} options - Options for the request.
  * @returns {Promise<AxiosResponse<ProductItem[]>>} A promise that resolves with the response data.
  */
-export async function findProduct(id: number, options: AxiosRequestConfig = {}) {
+export async function findProduct(id: string, options: AxiosRequestConfig = {}) {
   return $api.get<ProductItem>(`/products/${id}`, {
     transformResponse(data: string) {
       return productTransformer(JSON.parse(data))
