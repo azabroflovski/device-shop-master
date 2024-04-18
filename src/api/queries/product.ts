@@ -25,7 +25,9 @@ export function getProducts(options: AxiosRequestConfig = {}) {
  */
 export async function findProduct(id: number, options: AxiosRequestConfig = {}) {
   return $api.get<ProductItem>(`/products/${id}`, {
-    transformResponse: productTransformer,
+    transformResponse(data: string) {
+      return productTransformer(JSON.parse(data))
+    },
     ...options,
   })
 }
