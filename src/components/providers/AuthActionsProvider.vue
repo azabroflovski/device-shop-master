@@ -14,7 +14,7 @@ const { isLoggedIn, logoutWithRedirect } = useAuth()
         </template>
       </AFloatButton>
 
-      <AFloatButton @click="logoutWithRedirect" tooltip="Logout">
+      <AFloatButton tooltip="Logout" @click="logoutWithRedirect">
         <template #icon>
           <LogoutOutlined />
         </template>

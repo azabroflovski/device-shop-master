@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { computed, ref, watch, getCurrentInstance } from 'vue'
+import { computed, getCurrentInstance, ref, watch } from 'vue'
 import { storeProduct, updateProduct } from '@/api/queries'
 
-type Emits = {
+interface Emits {
   onSuccess: [product?: ProductItem]
 }
 
@@ -18,16 +18,16 @@ defineExpose({
 const categories = [
   {
     label: 'Phones',
-    value: 'phones'
+    value: 'phones',
   },
   {
     label: 'Tablets',
-    value: 'tablet'
+    value: 'tablet',
   },
   {
     label: 'Laptops',
-    value: 'laptops'
-  }
+    value: 'laptops',
+  },
 ]
 
 function defaultModel(): ProductItem {
@@ -36,16 +36,15 @@ function defaultModel(): ProductItem {
     category: 'phones',
     description: '',
     price: 0,
-    status: 'draft'
+    status: 'draft',
   }
 }
 
 function open(product?: ProductItem) {
   vm?.proxy?.$forceUpdate()
 
-  if (product) {
+  if (product)
     model.value = product
-  }
 
   show.value = true
 }
@@ -60,9 +59,8 @@ const loading = ref(false)
 const hasError = ref(false)
 
 const statusTip = computed(() => {
-  if (model.value.status === 'draft') {
+  if (model.value.status === 'draft')
     return 'Hidden from website catalog'
-  }
 
   return ' Available online and visible in catalog'
 })
@@ -72,9 +70,8 @@ const okText = computed(() => {
 })
 
 watch(show, (isOpen) => {
-  if (!isOpen) {
+  if (!isOpen)
     reset()
-  }
 })
 
 function reset() {
@@ -96,19 +93,21 @@ async function createOrSave() {
 
     model.value.createdAt = new Date()
 
-    isExistModel ?
-        await updateProduct(model.value.id!, model.value) :
-        await storeProduct(model.value)
+    isExistModel
+      ? await updateProduct(model.value.id!, model.value)
+      : await storeProduct(model.value)
 
     resetWithSuccess()
-  } catch (error) {
+  }
+  catch (error) {
     // send error to sentry/bugsnag
     hasError.value = true
 
-    setTimeout((() => {
+    setTimeout(() => {
       hasError.value = false
-    }), 5000)
-  } finally {
+    }, 5000)
+  }
+  finally {
     loading.value = false
   }
 }
@@ -119,15 +118,15 @@ async function createOrSave() {
     v-model:open="show"
     title="New product"
     :ok-text="okText"
-    @ok="createOrSave"
     width="340px"
     :confirm-loading="loading"
+    @ok="createOrSave"
   >
     <AForm
       layout="vertical"
-      @submit="createOrSave"
       :disabled="loading"
       style="margin-top: 26px;"
+      @submit="createOrSave"
     >
       <AFlex gap="12">
         <AFormItem label="Name">
@@ -165,18 +164,22 @@ async function createOrSave() {
         />
       </AFormItem>
 
-       <AFormItem label="Status">
-         <ARadioGroup v-model:value="model.status">
-           <ARadio value="draft">Draft</ARadio>
-           <ARadio value="published">Published</ARadio>
-         </ARadioGroup>
+      <AFormItem label="Status">
+        <ARadioGroup v-model:value="model.status">
+          <ARadio value="draft">
+            Draft
+          </ARadio>
+          <ARadio value="published">
+            Published
+          </ARadio>
+        </ARadioGroup>
 
-         <div style="margin-top: 12px">
-           <ATypographyText type="secondary">
-             {{ statusTip }}
-           </ATypographyText>
-         </div>
-       </AFormItem>
+        <div style="margin-top: 12px">
+          <ATypographyText type="secondary">
+            {{ statusTip }}
+          </ATypographyText>
+        </div>
+      </AFormItem>
     </AForm>
   </AModal>
 </template>

@@ -8,7 +8,7 @@ const { attemptLogin } = useAuth()
 
 const credentials = ref({
   email: '',
-  password: ''
+  password: '',
 })
 
 const router = useRouter()
@@ -16,9 +16,8 @@ const loading = ref(false)
 const hasError = ref(false)
 
 watch(show, (isOpen) => {
-  if (isOpen) {
+  if (isOpen)
     reset()
-  }
 })
 
 function reset() {
@@ -26,7 +25,7 @@ function reset() {
   hasError.value = false
   credentials.value = {
     email: '',
-    password: ''
+    password: '',
   }
 }
 
@@ -42,15 +41,15 @@ async function handleLogin() {
   if (success) {
     show.value = false
     await router.push({
-      name: 'dashboard'
+      name: 'dashboard',
     })
     return
   }
 
   hasError.value = true
-  setTimeout((() => {
+  setTimeout(() => {
     hasError.value = false
-  }), 5000)
+  }, 5000)
 
   loading.value = false
 }
@@ -61,15 +60,15 @@ async function handleLogin() {
     v-model:open="show"
     title="Authorization"
     ok-text="Sign"
-    @ok="handleLogin"
     width="340px"
     :confirm-loading="loading"
+    @ok="handleLogin"
   >
     <AForm
       layout="vertical"
-      @submit="handleLogin"
       :disabled="loading"
       style="margin-top: 26px;"
+      @submit="handleLogin"
     >
       <AFormItem label="Login">
         <AInput
@@ -98,8 +97,12 @@ async function handleLogin() {
 
     <ATypographyText type="secondary">
       <AFlex justify="space-between">
-        <div style="margin-bottom: 6px;">Demo credentials</div>
-        <AButton @click="letsGo" size="small">Let's go</AButton>
+        <div style="margin-bottom: 6px;">
+          Demo credentials
+        </div>
+        <AButton size="small" @click="letsGo">
+          Let's go
+        </AButton>
       </AFlex>
 
       <div style="font-size: 12px; margin-bottom: 4px">

@@ -1,17 +1,18 @@
 <script lang="ts" setup>
+import { useHead } from '@unhead/vue'
 import AuthUserCard from '@/components/AuthUserCard.vue'
 import ProductsList from '@/components/ProductsList.vue'
 
-import { useHead } from '@unhead/vue'
-
 useHead({
-  title: 'Dashboard'
+  title: 'Dashboard',
 })
 </script>
 
 <template>
   <section>
-    <h3 style="margin-bottom: 10px">You profile</h3>
+    <h3 style="margin-bottom: 10px">
+      You profile
+    </h3>
     <AuthUserCard />
   </section>
 

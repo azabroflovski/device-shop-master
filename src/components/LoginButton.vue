@@ -1,8 +1,7 @@
 <script lang="ts" setup>
-import LoginDialog from '@/components/LoginDialog.vue'
-
-import { ref, computed, } from 'vue'
+import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
+import LoginDialog from '@/components/LoginDialog.vue'
 import { useAuth } from '@/composables/useAuth'
 
 const router = useRouter()
@@ -12,9 +11,10 @@ const showLoginDialog = ref(false)
 function loginOrDashboard() {
   if (isLoggedIn.value) {
     router.push({
-      name: 'dashboard'
+      name: 'dashboard',
     })
-  } else {
+  }
+  else {
     showLoginDialog.value = true
   }
 }

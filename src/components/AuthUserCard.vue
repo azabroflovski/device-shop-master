@@ -8,10 +8,14 @@ const { user, logoutWithRedirect } = useAuth()
   <ACard>
     <AFlex justify="space-between">
       <AFlex align="end">
-        <AAvatar size="large">{{ user.name[0] }}</AAvatar>
+        <AAvatar size="large">
+          {{ user.name[0] }}
+        </AAvatar>
 
         <div style="margin-left: 12px;">
-          <div style="line-height: 1">{{ user.name }}</div>
+          <div style="line-height: 1">
+            {{ user.name }}
+          </div>
           <ATypographyText type="secondary" style="font-size: 12px">
             {{ user.email }}
           </ATypographyText>

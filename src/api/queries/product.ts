@@ -1,6 +1,6 @@
+import type { AxiosRequestConfig } from 'axios'
 import { $api } from '@/api/client'
 import { productTransformer } from '@/api/transformers'
-import type { AxiosRequestConfig } from 'axios'
 
 /**
  * Retrieves a list of products.
@@ -8,13 +8,13 @@ import type { AxiosRequestConfig } from 'axios'
  * @returns {Promise<AxiosResponse<ProductItem[]>>} A promise that resolves with the response data.
  */
 export function getProducts(options: AxiosRequestConfig = {}) {
-    return $api.get<ProductItem[]>('/products', {
-        transformResponse(data: string) {
-            const items = JSON.parse(data)
-            return items.map(productTransformer)
-        },
-        ...options
-    })
+  return $api.get<ProductItem[]>('/products', {
+    transformResponse(data: string) {
+      const items = JSON.parse(data)
+      return items.map(productTransformer)
+    },
+    ...options,
+  })
 }
 
 /**
@@ -24,10 +24,10 @@ export function getProducts(options: AxiosRequestConfig = {}) {
  * @returns {Promise<AxiosResponse<ProductItem[]>>} A promise that resolves with the response data.
  */
 export async function findProduct(id: number, options: AxiosRequestConfig = {}) {
-    return $api.get<ProductItem>(`/products/${id}`, {
-        transformResponse: productTransformer,
-        ...options
-    })
+  return $api.get<ProductItem>(`/products/${id}`, {
+    transformResponse: productTransformer,
+    ...options,
+  })
 }
 
 /**
@@ -37,9 +37,9 @@ export async function findProduct(id: number, options: AxiosRequestConfig = {}) 
  * @returns {Promise<AxiosResponse>} A promise that resolves with the response data.
  */
 export async function storeProduct(payload: Partial<ProductItem>, options: AxiosRequestConfig = {}) {
-    return $api.post('/products', payload, {
-        ...options
-    })
+  return $api.post('/products', payload, {
+    ...options,
+  })
 }
 
 /**
@@ -49,7 +49,7 @@ export async function storeProduct(payload: Partial<ProductItem>, options: Axios
  * @returns {Promise<AxiosResponse<ProductItem>>} A promise that resolves with the response data.
  */
 export function updateProduct(id: number, payload: Partial<ProductItem>) {
-    return $api.patch<ProductItem>(`/products/${id}`, payload)
+  return $api.patch<ProductItem>(`/products/${id}`, payload)
 }
 
 /**
@@ -58,10 +58,9 @@ export function updateProduct(id: number, payload: Partial<ProductItem>) {
  * @returns {Promise<AxiosResponse<any, any>>} A promise that resolves with the response data.
  */
 export async function destroyProduct(id: number) {
-    return $api.delete(`/products/${id}`)
+  return $api.delete(`/products/${id}`)
 }
 
-
 export async function searchProduct(keyword: string) {
-    return $api.get<ProductItem[]>(`/products?query=${keyword}`)
+  return $api.get<ProductItem[]>(`/products?query=${keyword}`)
 }

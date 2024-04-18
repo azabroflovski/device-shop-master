@@ -1,14 +1,13 @@
 <script lang="ts" setup>
+import { useRouter } from 'vue-router'
 import ProductSearchbar from '@/components/ProductSearchbar.vue'
 import LoginButton from '@/components/LoginButton.vue'
-
-import { useRouter } from 'vue-router'
 
 const router = useRouter()
 
 function goHome() {
   router.push({
-    name: 'home'
+    name: 'home',
   })
 }
 </script>
@@ -16,7 +15,7 @@ function goHome() {
 <template>
   <APageHeader class="app-header">
     <template #title>
-      <span @click="goHome" class="app-header__logo">DEVICE SHOP</span>
+      <span class="app-header__logo" @click="goHome">DEVICE SHOP</span>
     </template>
 
     <template #extra>
@@ -28,7 +27,6 @@ function goHome() {
       </div>
     </template>
   </APageHeader>
-
 </template>
 
 <style>

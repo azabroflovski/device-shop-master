@@ -1,6 +1,8 @@
 <template>
   <div class="app-footer">
-    <ADivider plain>&copy; azabroflovski</ADivider>
+    <ADivider plain>
+      &copy; azabroflovski
+    </ADivider>
   </div>
 </template>
 

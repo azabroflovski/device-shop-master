@@ -10,19 +10,18 @@ import { useAuth } from '@/composables/useAuth'
  * @returns {Promise<void>} A promise that resolves once the authentication status is checked.
  */
 export const authGuard: NavigationGuard = async (to, from, next) => {
-    const { init, isLoggedIn } = useAuth()
+  const { init, isLoggedIn } = useAuth()
 
-    if (isLoggedIn.value) {
-        next()
-        return
-    }
+  if (isLoggedIn.value) {
+    next()
+    return
+  }
 
-    await init()
-    await nextTick()
+  await init()
+  await nextTick()
 
-    if (isLoggedIn.value) {
-        next()
-    } else {
-        next('/login')
-    }
+  if (isLoggedIn.value)
+    next()
+  else
+    next('/login')
 }

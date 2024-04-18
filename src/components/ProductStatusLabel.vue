@@ -9,17 +9,15 @@ const props = defineProps<Props>()
 const isDraft = computed(() => props.status === 'draft')
 
 const badgeStatus = computed(() => {
-  if (isDraft.value) {
+  if (isDraft.value)
     return 'default'
-  }
 
   return 'success'
 })
 
 const badgeTip = computed(() => {
-  if (isDraft.value) {
+  if (isDraft.value)
     return 'Item is not displayed on the site.'
-  }
 
   return 'Item is visible on the website'
 })
@@ -27,7 +25,7 @@ const badgeTip = computed(() => {
 
 <template>
   <ATooltip :title="badgeTip" placement="right">
-    <ABadge :status="badgeStatus" :text="status" class="product-status"  />
+    <ABadge :status="badgeStatus" :text="status" class="product-status" />
   </ATooltip>
 </template>
 

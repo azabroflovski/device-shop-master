@@ -1,8 +1,8 @@
 <script lang="ts" setup>
+import { ref } from 'vue'
 import ProductCard from '@/components/ProductCard.vue'
 import CreateProductDialog from '@/components/CreateProductDialog.vue'
 
-import { ref } from 'vue'
 import { destroyProduct } from '@/api/queries'
 import { useProductsApi } from '@/composables/useProductsApi'
 
@@ -16,9 +16,8 @@ const {
   isLoadingWithoutData,
   isLoadingWithData,
   isEmpty,
-  refetchProducts
+  refetchProducts,
 } = useProductsApi()
-
 
 const productOptionHandlers = {
   async edit(product: ProductItem) {
@@ -30,22 +29,25 @@ const productOptionHandlers = {
       isLoading.value = true
       await destroyProduct(product.id!)
       await refetchProducts() // renew products list
-    } catch (error) {
+    }
+    catch (error) {
       // send error to sentry/bugsnag/etc
     }
-  }
+  },
 }
 
 async function callProductOption(key: 'edit' | 'delete', product: ProductItem) {
   if (key in productOptionHandlers) {
     try {
       await productOptionHandlers[key](product)
-    } catch (error) {
+    }
+    catch (error) {
       // send error to sentry/bugsnag/etc
     }
   }
 }
 </script>
+
 <template>
   <AFlex justify="space-between" align="center" style="margin-bottom: 16px">
     <h3>Products <ASpin v-if="isLoadingWithData" style="margin-left: 16px" /></h3>
@@ -57,7 +59,9 @@ async function callProductOption(key: 'edit' | 'delete', product: ProductItem) {
         :options="sortingOptions" style="width: 150px"
       />
       <AInputSearch placeholder="Filter" style="width: 200px" />
-      <AButton @click="productDialog.open()">Add</AButton>
+      <AButton @click="productDialog.open()">
+        Add
+      </AButton>
     </AFlex>
   </AFlex>
 

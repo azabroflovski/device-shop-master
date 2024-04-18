@@ -7,12 +7,10 @@ alertBus.on('REQUEST_LIMIT_ERROR', ({ title, description }) => {
     message: title,
     description,
     placement: 'topRight',
-  });
+  })
 })
 </script>
 
 <template>
-  <div>
-
-  </div>
+  <div />
 </template>

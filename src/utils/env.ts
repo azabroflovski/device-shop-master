@@ -5,9 +5,8 @@
  * @returns {string | undefined} The value of the environment variable, or the default value if it's not set.
  */
 export function env(key: string, defaultValue?: string) {
-    if (import.meta.env['VITE_' + key]) {
-        return import.meta.env['VITE_' + key]
-    }
+  if (import.meta.env[`VITE_${key}`])
+    return import.meta.env[`VITE_${key}`]
 
-    return defaultValue
+  return defaultValue
 }

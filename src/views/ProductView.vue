@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {computed, watch} from 'vue'
+import { computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useHead } from '@unhead/vue'
 import { useAsyncState } from '@vueuse/core'
@@ -13,7 +13,7 @@ const router = useRouter()
 const { state: response, isLoading, execute } = useAsyncState(() => findProduct(+route.params.id), null, {
   onError() {
     router.push({
-      name: '404'
+      name: '404',
     })
   },
 })
@@ -22,9 +22,8 @@ const product = computed(() => {
   return response.value?.data
 })
 
-
 useHead({
-  title: () => safeTitle(product.value?.name)
+  title: () => safeTitle(product.value?.name),
 })
 
 watch(() => route.params.id, () => {
@@ -37,7 +36,9 @@ watch(() => route.params.id, () => {
 
   <ABreadcrumb v-if="product">
     <ABreadcrumbItem>
-      <RouterLink :to="{ name: 'home' }">Products</RouterLink>
+      <RouterLink :to="{ name: 'home' }">
+        Products
+      </RouterLink>
     </ABreadcrumbItem>
     <ABreadcrumbItem>
       {{ product.name }}

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import ProductStatusLabel from "@/components/ProductStatusLabel.vue";
 import { MoreOutlined } from '@ant-design/icons-vue'
+import ProductStatusLabel from '@/components/ProductStatusLabel.vue'
 
 interface Props {
   product: ProductItem
@@ -8,13 +8,12 @@ interface Props {
   hideFooter?: boolean
 }
 
-type Emits = {
+interface Emits {
   onOptionClick: [ key: 'edit' | 'delete', product: ProductItem]
 }
 
 const props = defineProps<Props>()
 const emit = defineEmits<Emits>()
-
 
 // NOTE: Ant design doest not expose types for this
 // i am use any for faster implementation
@@ -29,7 +28,7 @@ function handleOptionsClick({ key }: any) {
       <template #title>
         <AFlex justify="space-between">
           <div>
-            <ATypographyText >
+            <ATypographyText>
               {{ product.name }}
             </ATypographyText>
 
@@ -43,10 +42,10 @@ function handleOptionsClick({ key }: any) {
           <ADropdown trigger="click">
             <AButton
               v-if="!hideActions"
-              @click.stop=""
               shape="circle"
               size="small"
               type="text"
+              @click.stop=""
             >
               <template #icon>
                 <MoreOutlined />
@@ -55,8 +54,12 @@ function handleOptionsClick({ key }: any) {
 
             <template #overlay>
               <AMenu @click="handleOptionsClick">
-                <AMenuItem key="edit">Edit</AMenuItem>
-                <AMenuItem key="delete">Delete</AMenuItem>
+                <AMenuItem key="edit">
+                  Edit
+                </AMenuItem>
+                <AMenuItem key="delete">
+                  Delete
+                </AMenuItem>
               </AMenu>
             </template>
           </ADropdown>

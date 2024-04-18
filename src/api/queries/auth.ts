@@ -5,8 +5,8 @@ import { sleep } from '@/utils/async'
  * Interface representing login credentials.
  */
 export interface LoginCredentials {
-    email: string
-    password: string
+  email: string
+  password: string
 }
 
 /**
@@ -15,27 +15,27 @@ export interface LoginCredentials {
  * @returns A promise that resolves with the response from the server.
  */
 export async function loginRequest(credentials: LoginCredentials) {
-    const { email, password } = authorizedUser
-    // For the sake of decency, let's run his credentials
-    const isCorrectCredentials =
-        email === credentials.email &&
-        password === credentials.password
+  const { email, password } = authorizedUser
+  // For the sake of decency, let's run his credentials
+  const isCorrectCredentials
+        = email === credentials.email
+        && password === credentials.password
 
-    const authToken = isCorrectCredentials ? 'bla_bla' : null
+  const authToken = isCorrectCredentials ? 'bla_bla' : null
 
-    // Imagine there's a request to the authentication server.
-    await sleep(authDelay)
+  // Imagine there's a request to the authentication server.
+  await sleep(authDelay)
 
-    // and... puff!!
-    return {
-        authToken,  // MAGIC
-    }
+  // and... puff!!
+  return {
+    authToken, // MAGIC
+  }
 }
 
 /**
  * Fetches the user profile from the server.
  */
 export async function fetchProfile() {
-    await sleep(1000)
-    return authorizedUser
+  await sleep(1000)
+  return authorizedUser
 }

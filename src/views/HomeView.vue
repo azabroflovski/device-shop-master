@@ -1,9 +1,8 @@
 <script lang="ts" setup>
-import ProductCard from '@/components/ProductCard.vue'
-
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useHead } from '@unhead/vue'
+import ProductCard from '@/components/ProductCard.vue'
 import { useProductsApi } from '@/composables/useProductsApi'
 
 const router = useRouter()
@@ -16,7 +15,7 @@ const publishedProducts = computed(() => {
 })
 
 useHead({
-  title: 'Home'
+  title: 'Home',
 })
 
 function openProduct(id: number) {
@@ -24,7 +23,7 @@ function openProduct(id: number) {
     name: 'product',
     params: {
       id,
-    }
+    },
   })
 }
 </script>
@@ -34,13 +33,13 @@ function openProduct(id: number) {
     <ASpin v-if="isLoading" />
   </AFlex>
 
-  <ARow v-if="data" :gutter="[16,16]">
+  <ARow v-if="data" :gutter="[16, 16]">
     <ACol v-for="product in publishedProducts" :key="product.id" :span="12">
       <ProductCard
-        @click="openProduct(product.id!)"
         :product="product"
         hide-actions
         hide-footer
+        @click="openProduct(product.id!)"
       />
     </ACol>
   </ARow>

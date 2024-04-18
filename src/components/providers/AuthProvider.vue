@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { useAuth } from '@/composables/useAuth'
 import { onMounted } from 'vue'
+import { useAuth } from '@/composables/useAuth'
 
 const { init } = useAuth()
 
@@ -10,5 +10,5 @@ onMounted(() => {
 </script>
 
 <template>
-  <div></div>
+  <div />
 </template>

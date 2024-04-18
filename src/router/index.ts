@@ -7,13 +7,13 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: () => import('@/views/HomeView.vue')
+      component: () => import('@/views/HomeView.vue'),
     },
     {
       path: '/dashboard',
       name: 'dashboard',
       component: () => import('@/views/DashboardView.vue'),
-      beforeEnter: [authGuard]
+      beforeEnter: [authGuard],
     },
     {
       path: '/products/:id',
@@ -28,10 +28,9 @@ const router = createRouter({
     {
       path: '/:pathMatch(.*)*',
       name: '404',
-      component: () => import('@/views/NotFoundView.vue')
+      component: () => import('@/views/NotFoundView.vue'),
     },
-  ]
+  ],
 })
-
 
 export default router

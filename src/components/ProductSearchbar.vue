@@ -1,13 +1,13 @@
 <script lang="ts" setup>
 import { useAsyncState } from '@vueuse/core'
-import { useSearchbar } from '@/composables/useSearchbar'
-import { searchProduct } from '@/api/queries'
 import { computed, watch } from 'vue'
 import { useRouter } from 'vue-router'
+import { useSearchbar } from '@/composables/useSearchbar'
+import { searchProduct } from '@/api/queries'
 
 const { searchQuery, hasSearchQuery, onSearch } = useSearchbar()
-const { state: data, isLoading, execute } = useAsyncState(() => searchProduct(searchQuery.value),[], {
-  immediate: false
+const { state: data, isLoading, execute } = useAsyncState(() => searchProduct(searchQuery.value), [], {
+  immediate: false,
 })
 
 const router = useRouter()
@@ -20,23 +20,21 @@ const searchResult = computed(() => {
 })
 
 onSearch(() => {
-  if (hasSearchQuery.value) {
+  if (hasSearchQuery.value)
     execute()
-  }
 })
 
 watch(searchQuery, (value) => {
-  if (value.length === 0) {
+  if (value.length === 0)
     data.value = []
-  }
 })
 
 function onSelect(text: string, option: any) {
   router.push({
     name: 'product',
     params: {
-      id: option.text
-    }
+      id: option.text,
+    },
   })
 }
 </script>
