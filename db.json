@@ -1,5 +1,35 @@
 {
-  "products": [],
+  "products": [
+    {
+      "id": "8037",
+      "name": "Macbook Pro M2",
+      "category": "laptops",
+      "description": "Apple announced the M2 on June 6, 2022, at Worldwide Developers Conference (WWDC), along with models of the MacBook Air and the 13-inch MacBook Pro using the M2. The M2 is made with TSMC's \"Enhanced 5-nanometer technology\" N5P process and contains 20 billion transistors, a 25% increase from the M1.",
+      "price": 2400,
+      "status": "published",
+      "createdAt": "2024-04-18T18:04:07.880Z",
+      "displayPrice": "$2,400.00",
+      "displayCreatedAt": "just now"
+    },
+    {
+      "id": "c6f0",
+      "name": "Iphone 15 Pro",
+      "category": "phones",
+      "description": "The iPhone 15 Pro and Pro Max have a few special new hardware features that you should know about to make the most of your new phone, including five amazing cameras, a new action button and charging at USB 3.0 speeds.",
+      "price": 1140,
+      "status": "published",
+      "createdAt": "2024-04-18T18:03:35.932Z"
+    },
+    {
+      "id": "1723",
+      "name": "Pixel 7",
+      "category": "phones",
+      "description": "With Pixel 7, you can take brighter, smoother videos of your most memorable moments. Tensor G2 combines hardware and software to enable high-quality video stabilization. And Pixel's new 10-bit HDR video lets you record with wider color ranges and higher contrast.",
+      "price": 560,
+      "status": "published",
+      "createdAt": "2024-04-18T18:03:07.864Z"
+    }
+  ],
   "categories": [],
   "users": []
 }
