@@ -33,6 +33,7 @@ export function useProductsApi() {
         sort,
         sortingOptions,
         data,
+        isLoading,
         isLoadingWithoutData,
         isLoadingWithData,
         isEmpty,

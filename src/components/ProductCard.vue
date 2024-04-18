@@ -28,7 +28,18 @@ function handleOptionsClick({ key }: any) {
     <ACardMeta>
       <template #title>
         <AFlex justify="space-between">
-          <div style="font-size: 16px">{{ product.name }}</div>
+          <div>
+            <ATypographyText >
+              {{ product.name }}
+            </ATypographyText>
+
+            <br>
+
+            <ATypographyText type="secondary" style="font-size: 12px; text-transform: capitalize">
+              {{ product.category }}
+            </ATypographyText>
+          </div>
+
           <ADropdown trigger="click">
             <AButton
               v-if="!hideActions"

@@ -11,6 +11,7 @@ const productDialog = ref()
 const {
   data,
   sort,
+  isLoading,
   sortingOptions,
   isLoadingWithoutData,
   isLoadingWithData,
@@ -26,6 +27,7 @@ const productOptionHandlers = {
 
   async delete(product: ProductItem) {
     try {
+      isLoading.value = true
       await destroyProduct(product.id!)
       await refetchProducts() // renew products list
     } catch (error) {
