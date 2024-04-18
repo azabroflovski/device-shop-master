@@ -40,10 +40,10 @@ function authComposable() {
     }
 
     async function attemptLogin(credentials: LoginCredentials) {
-        const { data } = await loginRequest(credentials)
+        const { authToken } = await loginRequest(credentials)
 
-        if (data.value?.authToken) {
-            setAuthToken(data.value.authToken)
+        if (authToken) {
+            setAuthToken(authToken)
             await init()
             return true
         }
@@ -55,8 +55,7 @@ function authComposable() {
         const authToken = getAuthToken()
 
         if (authToken) {
-            const { data } = await fetchProfile()
-            state.value.user = data.value
+            state.value.user = await fetchProfile()
         }
     }
 
