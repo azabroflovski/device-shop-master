@@ -4,11 +4,10 @@ import ProductCard from '@/components/ProductCard.vue'
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useHead } from '@unhead/vue'
-import { getProducts } from '@/api/queries'
-import {useAsyncState} from "@vueuse/core";
+import { useProductsApi } from '@/composables/useProductsApi'
 
 const router = useRouter()
-const { state: data, isLoading } = useAsyncState(() => getProducts(), null)
+const { data, isLoading, isEmpty } = useProductsApi()
 
 // I didn't write my own backend.
 // I took a ready-made one, I was too lazy to do it on the side of the backend.
@@ -28,14 +27,6 @@ function openProduct(id: number) {
     }
   })
 }
-
-const hasProducts = computed(() => {
-  return publishedProducts.value && publishedProducts.value?.length && !isLoading.value
-})
-
-const isEmpty = computed(() => {
-  return !isLoading.value && !data.value?.length
-})
 </script>
 
 <template>
@@ -43,10 +34,10 @@ const isEmpty = computed(() => {
     <ASpin v-if="isLoading" />
   </AFlex>
 
-  <ARow v-if="hasProducts" :gutter="[16,16]">
+  <ARow v-if="data" :gutter="[16,16]">
     <ACol v-for="product in publishedProducts" :key="product.id" :span="12">
       <ProductCard
-        @click="openProduct(product.id)"
+        @click="openProduct(product.id!)"
         :product="product"
         hide-actions
         hide-footer
