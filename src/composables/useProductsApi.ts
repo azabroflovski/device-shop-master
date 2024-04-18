@@ -1,10 +1,10 @@
 import { computed, watch } from 'vue'
 import { useAsyncState } from '@vueuse/core'
 import { getProducts } from '@/api/queries'
-import { useProductSorting } from '@/composables/useProductSorting'
+import { useProductsSorting } from '@/composables/useProductsSorting'
 
 export function useProductsApi() {
-  const { sort, sortingOptions, sortingQueryParams } = useProductSorting()
+  const { sort, sortingOptions, sortingQueryParams } = useProductsSorting()
   const { state, isLoading, execute } = useAsyncState(() => getProducts({
     params: sortingQueryParams.value,
   }), null, { resetOnExecute: false })

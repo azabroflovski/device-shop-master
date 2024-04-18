@@ -1,7 +1,7 @@
 import { computed, ref } from 'vue'
-import { sortingConfig } from '@/config/dashboard'
+import { sortingConfig } from '@/config/product'
 
-export function useProductSorting() {
+export function useProductsSorting() {
   const sort = ref(sortingConfig.default)
   const sortingOptions = sortingConfig.options
   const sortingQueryParams = computed(() => {
