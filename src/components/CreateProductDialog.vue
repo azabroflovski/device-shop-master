@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import { computed, ref, watch, getCurrentInstance } from 'vue'
-import { createProductRequest, updateProductRequest } from '@/api/queries'
+import { storeProduct, updateProduct } from '@/api/queries'
 
 type Emits = {
-  onCreated: [product: ProductItem]
+  onSuccess: [product?: ProductItem]
 }
 
 const emit = defineEmits<Emits>()
@@ -56,9 +56,6 @@ function close() {
 
 const model = ref<Partial<ProductItem>>(defaultModel())
 
-const { execute: storeModel, onFetchFinally: storeHandler, data: storedModel } = createProductRequest(model)
-const { execute: updateModel, onFetchFinally: updateHandler, data: updatedModel } = updateProductRequest(model)
-
 const loading = ref(false)
 const hasError = ref(false)
 
@@ -86,37 +83,33 @@ function reset() {
   model.value = defaultModel()
 }
 
-function handlerFactory(product: ProductItem) {
-  loading.value = true
-
-  if (product?.id) {
-    show.value = false
-    reset()
-    emit('onCreated', product)
-    return
-  }
-
-  hasError.value = true
-  setTimeout((() => {
-    hasError.value = false
-  }), 5000)
-
-  loading.value = false
+function resetWithSuccess() {
+  show.value = false
+  reset()
+  emit('onSuccess')
 }
 
-storeHandler(async () => {
-  handlerFactory(storedModel.value)
-})
-
-updateHandler(async () => {
-  handlerFactory(updatedModel.value)
-})
-
 async function createOrSave() {
-  if (model.value?.id) {
-    await updateModel()
-  } else {
-    await storeModel()
+  try {
+    const isExistModel = !!model.value?.id
+    loading.value = true
+
+    model.value.createdAt = new Date()
+
+    isExistModel ?
+        await updateProduct(model.value.id!, model.value) :
+        await storeProduct(model.value)
+
+    resetWithSuccess()
+  } catch (error) {
+    // send error to sentry/bugsnag
+    hasError.value = true
+
+    setTimeout((() => {
+      hasError.value = false
+    }), 5000)
+  } finally {
+    loading.value = false
   }
 }
 </script>

@@ -4,10 +4,11 @@ import ProductCard from '@/components/ProductCard.vue'
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useHead } from '@unhead/vue'
-import { fetchProducts } from '@/api/queries'
+import { getProducts } from '@/api/queries'
+import {useAsyncState} from "@vueuse/core";
 
 const router = useRouter()
-const { data, isFetching } = fetchProducts()
+const { state: data, isLoading } = useAsyncState(() => getProducts(), null)
 
 // I didn't write my own backend.
 // I took a ready-made one, I was too lazy to do it on the side of the backend.
@@ -29,17 +30,17 @@ function openProduct(id: number) {
 }
 
 const hasProducts = computed(() => {
-  return publishedProducts.value && publishedProducts.value?.length && !isFetching.value
+  return publishedProducts.value && publishedProducts.value?.length && !isLoading.value
 })
 
 const isEmpty = computed(() => {
-  return !isFetching.value && !data.value?.length
+  return !isLoading.value && !data.value?.length
 })
 </script>
 
 <template>
   <AFlex justify="center" align="center" style="height: 100px;">
-    <ASpin v-if="isFetching" />
+    <ASpin v-if="isLoading" />
   </AFlex>
 
   <ARow v-if="hasProducts" :gutter="[16,16]">

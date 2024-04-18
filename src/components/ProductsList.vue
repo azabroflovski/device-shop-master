@@ -2,70 +2,73 @@
 import ProductCard from '@/components/ProductCard.vue'
 
 import { computed, ref, watch } from 'vue'
-import { fetchProducts } from '@/api/queries'
+import { getProducts, destroyProduct } from '@/api/queries'
+import { sortingConfig } from '@/config/dashboard'
 import CreateProductDialog from '@/components/CreateProductDialog.vue'
-import { $api } from '@/api/client'
+import { useAsyncState } from '@vueuse/core'
 
 const productDialog = ref()
-const sort = ref('price=desc')
-const sortingOptions = [
-  {
-    label: 'Highest price',
-    value: 'price=desc'
-  },
-  {
-    label: 'Lowest price',
-    value: 'price=asc',
-  }
-]
+const sort = ref(sortingConfig.default)
+const sortingOptions = sortingConfig.options
 
-const queryOptions = computed(() => {
-  const [sortBy, orderBy] = sort.value.split('=')
-
+const queryParams = computed(() => {
   return {
-    query: {
-      sortBy,
-      orderBy,
-    }
+    _sort: sort.value,
   }
 })
 
-const { isFetching, data, execute } = fetchProducts(queryOptions)
+const { state: response, isLoading, execute: refetchProducts } = useAsyncState(() => getProducts({
+  params: queryParams.value
+}), null, { resetOnExecute: false })
 
-watch(queryOptions, () => {
-  execute()
+const data = computed(() => {
+  return response.value?.data
 })
 
-async function productOptionHandler(key: string, product: ProductItem) {
-  if (key === 'edit') {
+watch(queryParams, () => {
+  refetchProducts()
+})
+
+const productOptionHandlers = {
+  async edit(product: ProductItem) {
     productDialog.value.open(product)
-  }
+  },
 
-  if (key === 'delete') {
+  async delete(product: ProductItem) {
     try {
-      await $api(`/products/${product.id}`).delete()
-      await execute() // renew products list
+      await destroyProduct(product.id!)
+      await refetchProducts() // renew products list
     } catch (error) {
       // send error to sentry/bugsnag/etc
     }
   }
 }
 
-const fetchingWithData = computed(() => {
-  return isFetching.value && data.value?.length
+async function callProductOption(key: 'edit' | 'delete', product: ProductItem) {
+  if (key in productOptionHandlers) {
+    try {
+      await productOptionHandlers[key](product)
+    } catch (error) {
+      // send error to sentry/bugsnag/etc
+    }
+  }
+}
+
+const isLoadingWithData = computed(() => {
+  return isLoading.value && data.value?.length
 })
 
-const fetchingWithoutData = computed(() => {
-  return isFetching.value && !data.value
+const isLoadingWithoutData = computed(() => {
+  return isLoading.value && !data.value
 })
 
-const fetchingEmpty = computed(() => {
-  return !isFetching.value && !data.value?.length
+const isEmpty = computed(() => {
+  return !isLoading.value && !data.value?.length
 })
 </script>
 <template>
   <AFlex justify="space-between" align="center" style="margin-bottom: 16px">
-    <h3>Products <ASpin v-if="fetchingWithData" style="margin-left: 16px" /></h3>
+    <h3>Products <ASpin v-if="isLoadingWithData" style="margin-left: 16px" /></h3>
 
     <AFlex gap="12">
       <ASelect
@@ -85,18 +88,18 @@ const fetchingEmpty = computed(() => {
       :product="product"
       style="margin-bottom: 16px"
       @click="productDialog.open(product)"
-      @on-option-click="productOptionHandler"
+      @on-option-click="callProductOption"
     />
   </div>
 
-  <AFlex v-if="fetchingWithoutData">
+  <AFlex v-if="isLoadingWithoutData">
     <ASkeleton active />
   </AFlex>
 
   <AEmpty
-    v-if="fetchingEmpty"
+    v-if="isEmpty"
     style="margin-top: 30px;"
   />
 
-  <CreateProductDialog ref="productDialog" @on-created="execute" />
+  <CreateProductDialog ref="productDialog" @on-success="refetchProducts" />
 </template>

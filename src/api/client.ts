@@ -10,14 +10,19 @@ export function createApiClient() {
     }
 
     const $api =  axios.create({
-        baseURL: apiURL
+        baseURL: apiURL,
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
     })
 
     $api.interceptors.request.use((config) => {
         const authToken = localStorage.getItem('authToken')
 
         if (authToken) {
-            config.headers.set('Authorization', `Bearer ${authToken}`)
+            // NOTE: when its enabled, we have a cors error (json-server issue)
+            // config.headers.setAuthorization(`Bearer ${authToken}`)
         }
 
         return config

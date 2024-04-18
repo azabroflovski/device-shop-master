@@ -1,6 +1,6 @@
 import { $api } from '@/api/client'
 import { productTransformer } from '@/api/transformers'
-import type { AxiosResponse, AxiosRequestConfig } from 'axios'
+import type { AxiosRequestConfig } from 'axios'
 
 /**
  * Retrieves a list of products.
@@ -9,7 +9,10 @@ import type { AxiosResponse, AxiosRequestConfig } from 'axios'
  */
 export function getProducts(options: AxiosRequestConfig = {}) {
     return $api.get<ProductItem[]>('/products', {
-        transformResponse: productTransformer,
+        transformResponse(data: string) {
+            const items = JSON.parse(data)
+            return items.map(productTransformer)
+        },
         ...options
     })
 }
@@ -41,22 +44,21 @@ export async function storeProduct(payload: Partial<ProductItem>, options: Axios
 
 /**
  * Updates an existing product.
+ * @param {number} id - The id of the product to update
  * @param {Partial<ProductItem>} payload - The data of the product to update.
  * @returns {Promise<AxiosResponse<ProductItem>>} A promise that resolves with the response data.
  */
-export function updateProduct(payload: Partial<ProductItem>) {
-    return $api.patch<ProductItem>(`/products/${payload.id}`, {
-        immediate: false
-    })
+export function updateProduct(id: number, payload: Partial<ProductItem>) {
+    return $api.patch<ProductItem>(`/products/${id}`, payload)
 }
 
 /**
  * Deletes a product.
- * @param {Partial<ProductItem>} payload - The data of the product to delete.
- * @returns {Promise<AxiosResponse>} A promise that resolves with the response data.
+ * @param {number} id - The id of the product to delete.
+ * @returns {Promise<AxiosResponse<any, any>>} A promise that resolves with the response data.
  */
-export async function destroyProduct(payload: Partial<ProductItem>) {
-    return $api.delete(`/products/${payload.id}`)
+export async function destroyProduct(id: number) {
+    return $api.delete(`/products/${id}`)
 }
 
 

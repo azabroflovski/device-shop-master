@@ -8,7 +8,7 @@ import { toPrice } from '@/utils/number'
  */
 export function productTransformer(product: ProductItem): ProductItem {
     product.displayPrice = toPrice(product.price)
-    product.displayCreatedAt = formatTimeAgo(new Date(product.created_at!))
+    product.displayCreatedAt = formatTimeAgo(new Date(product.createdAt!))
 
     return product
 }

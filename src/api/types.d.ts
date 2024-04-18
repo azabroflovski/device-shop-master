@@ -7,7 +7,7 @@ interface ProductItem {
     category: string
     price: number
     status: ProductStatus
-    created_at?: string
+    createdAt?: Date
 
     displayPrice?: string
     displayCreatedAt?: string
