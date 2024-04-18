@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "run-p \"build-only {@}\" --",
     "preview": "vite preview",
-    "json-server": "json-server --watch db.json",
+    "json-server": "json-server db.json",
     "test:unit": "vitest",
     "test:e2e": "playwright test",
     "build-only": "vite build",
