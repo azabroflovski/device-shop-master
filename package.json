@@ -1,8 +1,8 @@
 {
   "name": "device-shop-master",
-  "version": "0.0.5",
-  "private": true,
   "type": "module",
+  "version": "0.0.5",
+  "private": false,
   "scripts": {
     "dev": "vite",
     "build": "run-p \"build-only {@}\" --",

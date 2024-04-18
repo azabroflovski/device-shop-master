@@ -2,13 +2,32 @@
 import { computed, getCurrentInstance, ref, watch } from 'vue'
 import { storeProduct, updateProduct } from '@/api/queries'
 
-interface Emits {
+const emit = defineEmits<{
   onSuccess: [product?: ProductItem]
-}
+}>()
 
-const emit = defineEmits<Emits>()
-const show = defineModel('open')
 const vm = getCurrentInstance()
+const show = defineModel('open')
+
+const model = ref<Partial<ProductItem>>(defaultModel())
+const loading = ref(false)
+const hasError = ref(false)
+
+const statusTip = computed(() => {
+  if (model.value.status === 'draft')
+    return 'Hidden from website catalog'
+
+  return ' Available online and visible in catalog'
+})
+
+const okText = computed(() => {
+  return model.value?.id ? 'Save' : 'Create'
+})
+
+watch(show, (isOpen) => {
+  if (!isOpen)
+    reset()
+})
 
 defineExpose({
   open,
@@ -52,27 +71,6 @@ function open(product?: ProductItem) {
 function close() {
   show.value = false
 }
-
-const model = ref<Partial<ProductItem>>(defaultModel())
-
-const loading = ref(false)
-const hasError = ref(false)
-
-const statusTip = computed(() => {
-  if (model.value.status === 'draft')
-    return 'Hidden from website catalog'
-
-  return ' Available online and visible in catalog'
-})
-
-const okText = computed(() => {
-  return model.value?.id ? 'Save' : 'Create'
-})
-
-watch(show, (isOpen) => {
-  if (!isOpen)
-    reset()
-})
 
 function reset() {
   loading.value = false

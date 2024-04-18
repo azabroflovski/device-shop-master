@@ -6,7 +6,7 @@ export function createApiClient() {
   const apiURL = env('API_URL', '')
 
   if (!apiURL)
-    throw 'API_URL is not defined in environment variables'
+    throw new Error('API_URL is not defined in environment variables')
 
   const $api = axios.create({
     baseURL: apiURL,
