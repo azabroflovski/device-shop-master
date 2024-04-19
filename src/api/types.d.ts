@@ -5,7 +5,8 @@ interface ProductItem {
   name: string
   description: string
   category: string
-  price: number
+  year: number | string
+  price: number | null
   status: ProductStatus
   createdAt?: Date
 

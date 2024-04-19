@@ -69,7 +69,7 @@ export function defaultModel() {
     name: '',
     category: categoriesConfig.default,
     description: '',
-    price: 0,
+    price: null,
     status: 'draft',
   }
 }

@@ -2,6 +2,7 @@
 import { computed, getCurrentInstance, ref, watch } from 'vue'
 import { storeProduct, updateProduct } from '@/api/queries'
 import { categoriesConfig, defaultModel } from '@/config/product'
+import { requiredRuleFactory } from '@/utils/validators'
 
 const emit = defineEmits<{
   success: []
@@ -10,6 +11,7 @@ const emit = defineEmits<{
 const vm = getCurrentInstance()
 const show = defineModel('open')
 
+const form = ref()
 const model = ref<Partial<ProductItem>>(defaultModel() as ProductItem)
 const loading = ref(false)
 const hasError = ref(false)
@@ -92,8 +94,10 @@ function resetWithSuccess() {
 
 async function createOrSave() {
   try {
-    const isExistModel = !!model.value?.id
     loading.value = true
+
+    await form.value?.validate()
+    const isExistModel = !!model.value?.id
 
     model.value.createdAt = new Date()
 
@@ -127,33 +131,62 @@ async function createOrSave() {
     @ok="createOrSave"
   >
     <AForm
+      ref="form"
       layout="vertical"
       :disabled="loading"
+      :model="model"
       style="margin-top: 26px;"
       @submit="createOrSave"
     >
       <AFlex gap="12">
-        <AFormItem label="Name">
+        <AFormItem
+          label="Name"
+          name="name"
+          :rules="[
+            requiredRuleFactory('Enter device name'),
+          ]"
+        >
           <AInput
             v-model:value="model.name"
             placeholder="Pixel 7"
           />
         </AFormItem>
 
-        <AFormItem label="Price">
-          <AInputNumber
-            v-model:value.number="model.price"
-            placeholder="Enter amount"
-            :controls="false"
-          >
-            <template #addonAfter>
-              USD
-            </template>
-          </AInputNumber>
+        <AFormItem
+          label="Year"
+          name="year"
+          :rules="[
+            requiredRuleFactory('Select year'),
+          ]"
+        >
+          <ADatePicker
+            v-model:value="model.year"
+            picker="year"
+            placeholder="2012"
+          />
         </AFormItem>
       </AFlex>
 
-      <AFormItem label="Category">
+      <AFormItem
+        label="Price"
+        name="price"
+        :rules="[
+          requiredRuleFactory('Price required'),
+        ]"
+      >
+        <AInputNumber
+          v-model:value.number="model.price"
+          placeholder="Enter amount"
+          :controls="false"
+          style="width: 100%"
+        >
+          <template #addonAfter>
+            USD
+          </template>
+        </AInputNumber>
+      </AFormItem>
+
+      <AFormItem label="Category" name="category">
         <ASelect
           v-model:value="model.category"
           :options="categoriesConfig.categories"

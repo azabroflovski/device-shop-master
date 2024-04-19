@@ -7,8 +7,10 @@ import { toPrice } from '@/utils/number'
  * @returns {ProductItem} The transformed product item.
  */
 export function productTransformer(product: ProductItem): ProductItem {
-  product.displayPrice = toPrice(product.price)
   product.displayCreatedAt = formatTimeAgo(new Date(product.createdAt!))
+
+  if (product.price)
+    product.displayPrice = toPrice(product.price)
 
   return product
 }
