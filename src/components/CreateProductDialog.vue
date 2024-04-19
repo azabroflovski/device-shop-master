@@ -15,6 +15,18 @@ const loading = ref(false)
 const hasError = ref(false)
 
 /**
+ * Computed property for check if the model exists.
+ */
+const isExistModel = computed(() => model.value?.id)
+
+/**
+ * Computed property that determines the title of the modal based on the existence of the model.
+ */
+const modalTitle = computed(() => {
+  return isExistModel.value ? 'Edit' : 'New product'
+})
+
+/**
  * Computed property for determining text for the OK button
  */
 const statusTip = computed(() => {
@@ -108,7 +120,7 @@ async function createOrSave() {
 <template>
   <AModal
     v-model:open="show"
-    title="New product"
+    :title="modalTitle"
     :ok-text="okText"
     width="340px"
     :confirm-loading="loading"
