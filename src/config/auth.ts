@@ -1,12 +1,12 @@
 /**
  * Delay time (in milliseconds) for simulating authentication delay.
  */
-export const authDelay: number = 3000
+export const authDelay: number = 2000
 
 /**
  * Delay time (in milliseconds) for simulating logout delay.
  */
-export const logoutDelay: number = 3000
+export const logoutDelay: number = 2000
 
 /**
  * Object representing an authorized user.
