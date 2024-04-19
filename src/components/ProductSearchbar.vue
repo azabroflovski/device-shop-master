@@ -12,6 +12,9 @@ const { state: response, isLoading, execute } = useAsyncState(() => searchProduc
 
 const router = useRouter()
 
+/**
+ * Computed property to derive search results based on the response data.
+ */
 const searchResult = computed(() => {
   if (searchQuery.value.length === 0)
     return []
@@ -22,11 +25,21 @@ const searchResult = computed(() => {
   }))
 })
 
+/**
+ * Callback function to trigger a search operation when there is a search query.
+ * @param {Function} callback - The callback function to execute when a search is triggered.
+ */
 onSearch(() => {
   if (hasSearchQuery.value)
     execute()
 })
 
+/**
+ * Handles the selection of a search result.
+ * p.s sorry for any, ant-design not expose typing for this (+ времени мало)
+ * @param {string} text - The text of the selected option.
+ * @param {object} option - The selected option object.
+ */
 function onSelect(text: string, option: any) {
   router.push({
     name: 'product',
