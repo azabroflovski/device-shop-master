@@ -6,12 +6,12 @@ import ProductCard from '@/components/ProductCard.vue'
 import { useProductsApi } from '@/composables/useProductsApi'
 
 const router = useRouter()
-const { data, isLoading, isEmpty } = useProductsApi()
-
-// I didn't write my own backend.
-// I took a ready-made one, I was too lazy to do it on the side of the backend.
-const publishedProducts = computed(() => {
-  return data.value?.filter(product => product.status === 'published')
+const { data, isLoading, pagination, refetchProducts, isEmpty } = useProductsApi({
+  queryParams: computed(() => {
+    return {
+      status: 'published',
+    }
+  }),
 })
 
 useHead({
@@ -33,8 +33,8 @@ function openProduct(id: number) {
     <ASpin v-if="isLoading" />
   </AFlex>
 
-  <ARow v-if="data" :gutter="[16, 16]">
-    <ACol v-for="product in publishedProducts" :key="product.id" :span="12">
+  <ARow v-if="data?.length" :gutter="[16, 16]" style="margin-bottom: 26px">
+    <ACol v-for="product in data" :key="product.id" :span="12">
       <ProductCard
         :product="product"
         hide-actions
@@ -45,4 +45,14 @@ function openProduct(id: number) {
   </ARow>
 
   <AEmpty v-if="isEmpty" />
+
+  <APagination
+    v-if="pagination.total"
+    v-model:current="pagination.page"
+    v-model:page-size="pagination.pageSize"
+    :total="pagination.total"
+    show-size-changer
+    show-less-items
+    @change="refetchProducts"
+  />
 </template>

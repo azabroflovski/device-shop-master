@@ -1,9 +1,16 @@
+import type { ComputedRef } from 'vue'
 import { computed, reactive, ref, watch } from 'vue'
 import { useAsyncState, useDebounceFn } from '@vueuse/core'
 import { getProducts } from '@/api/queries'
 import { useProductsSorting } from '@/composables/useProductsSorting'
 
-export function useProductsApi() {
+interface UseProductsApiOptions {
+  queryParams: ComputedRef<{
+    [key: string]: any
+  }>
+}
+
+export function useProductsApi(options?: UseProductsApiOptions) {
   const pagination = reactive({
     page: 1,
     pageSize: 5,
@@ -24,7 +31,7 @@ export function useProductsApi() {
   const { sort, sortingOptions, sortingQueryParams } = useProductsSorting()
 
   const queryParams = computed(() => {
-    const params = {
+    let params = {
       _page: pagination.page,
       _limit: pagination.pageSize,
       category: [],
@@ -42,6 +49,13 @@ export function useProductsApi() {
 
       if (filters.status.length)
         params.status = filters.status
+    }
+
+    if (options?.queryParams.value) {
+      params = {
+        ...params,
+        ...options?.queryParams.value,
+      }
     }
 
     return params
