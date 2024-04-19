@@ -6,7 +6,7 @@ import ProductCard from '@/components/ProductCard.vue'
 import { useProductsApi } from '@/composables/useProductsApi'
 
 const router = useRouter()
-const { data, isLoading, pagination, refetchProducts, isEmpty } = useProductsApi({
+const { data, isLoading, sort, sortingOptions, pagination, refetchProducts, isEmpty } = useProductsApi({
   queryParams: computed(() => {
     return {
       status: 'published',
@@ -29,11 +29,26 @@ function openProduct(id: number) {
 </script>
 
 <template>
-  <AFlex justify="center" align="center" style="height: 100px;">
-    <ASpin v-if="isLoading" />
-  </AFlex>
+  <APageHeader>
+    <template #title>
+      Our catalog <ASpin v-if="isLoading" style="margin-left: 12px;" />
+    </template>
 
-  <ARow v-if="data?.length" :gutter="[16, 16]" style="margin-bottom: 26px">
+    <template #extra>
+      <ASelect
+        v-model:value="sort"
+        placeholder="Sorting"
+        :options="sortingOptions" style="width: 150px"
+      />
+    </template>
+  </APageHeader>
+
+  <ARow
+    v-if="data?.length"
+    v-auto-animate
+    :gutter="[16, 16]"
+    style="margin-bottom: 26px"
+  >
     <ACol v-for="product in data" :key="product.id" :span="12">
       <ProductCard
         :product="product"
