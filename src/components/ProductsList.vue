@@ -96,8 +96,8 @@ async function callProductOption(key: 'edit' | 'delete', product: ProductItem) {
   </div>
 
   <APagination
-    v-if="pagination.total"
     v-model:current="pagination.page"
+    v-model:page-size="pagination.pageSize"
     :total="pagination.total"
     show-less-items
     @change="refetchProducts"

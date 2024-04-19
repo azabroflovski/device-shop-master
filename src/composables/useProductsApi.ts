@@ -6,6 +6,7 @@ import { useProductsSorting } from '@/composables/useProductsSorting'
 export function useProductsApi() {
   const pagination = reactive({
     page: 1,
+    pageSize: 1,
     total: 0,
   })
 
@@ -14,22 +15,28 @@ export function useProductsApi() {
     status: [],
   })
 
+  const hasFilters = computed(() => {
+    return filters.status.length || filters.category.length
+  })
+
   const { sort, sortingOptions, sortingQueryParams } = useProductsSorting()
 
   const queryParams = computed(() => {
     const params = {
-      _page: 1,
-      _limit: 1,
+      _page: pagination.page,
+      _limit: pagination.pageSize,
       category: [],
       status: [],
       ...sortingQueryParams.value,
     }
 
-    if (filters.category.length > 0)
-      params.category = filters.category
+    if (hasFilters.value) {
+      if (filters.category.length)
+        params.category = filters.category
 
-    if (filters.status.length > 0)
-      params.status = filters.status
+      if (filters.status.length)
+        params.status = filters.status
+    }
 
     return params
   })
@@ -54,8 +61,18 @@ export function useProductsApi() {
     return !isLoading.value && !data.value?.length
   })
 
-  watch(queryParams, async () => {
+  watch(filters, () => {
+    pagination.page = 1
+  })
+
+  watch([filters, sort], async () => {
     await execute()
+  })
+
+  // T_T sorry for any (времени нету)
+  watch(() => state.value?.headers, async (headers: any) => {
+    if (headers && headers.has('x-total-count'))
+      pagination.total = Number.parseInt(headers.get('x-total-count'))
   })
 
   return {
