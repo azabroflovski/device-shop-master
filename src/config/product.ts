@@ -12,6 +12,20 @@ export const sortingConfig = {
   ],
 }
 
+export const statusesConfig = {
+  default: 'draft',
+  statuses: [
+    {
+      label: 'Draft',
+      value: 'draft',
+    },
+    {
+      label: 'Published',
+      value: 'published',
+    },
+  ],
+}
+
 export const categoriesConfig = {
   default: 'phones',
   categories: [

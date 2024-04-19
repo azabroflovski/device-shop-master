@@ -13,6 +13,7 @@ const productDialog = ref()
 const {
   data,
   sort,
+  filters,
   isLoading,
   sortingOptions,
   isLoadingWithoutData,
@@ -63,23 +64,24 @@ async function callProductOption(key: 'edit' | 'delete', product: ProductItem) {
 
       <AInputSearch placeholder="Filter" style="width: 200px" />
 
-      <ATooltip title="Show filters">
-        <AButton>
-          <template #icon>
-            <FilterOutlined />
-          </template>
-        </AButton>
-      </ATooltip>
+      <APopover trigger="click" placement="topRight">
+        <ATooltip title="Filters" placement="bottom">
+          <AButton>
+            <template #icon>
+              <FilterOutlined />
+            </template>
+          </AButton>
+        </ATooltip>
+        <template #content>
+          <ProductFilters v-model="filters" />
+        </template>
+      </APopover>
 
       <AButton @click="productDialog.open()">
         Add
       </AButton>
     </AFlex>
   </AFlex>
-
-  <div v-auto-animate style="margin-bottom: 26px">
-    <ProductFilters />
-  </div>
 
   <div v-auto-animate>
     <ProductCard

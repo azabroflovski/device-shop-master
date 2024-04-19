@@ -1,48 +1,36 @@
 <script lang="ts" setup>
-import { reactive } from 'vue'
-import { categoriesConfig } from '@/config/product'
+import { categoriesConfig, statusesConfig } from '@/config/product'
 
 const filters = defineModel({
   default() {
-    return reactive({
-      categories: [],
-      statuses: [],
-    })
+    return {
+      category: [],
+      status: [],
+    }
   },
 })
-
-function hasCategory(category: any) {
-  return filters.value.categories.findIndex(item => item.value === category.value) >= 0
-}
-
-function removeCategory(category: any) {
-  const categoryIndex = filters.value.categories.findIndex(item => item.value === category.value)
-  filters.value.categories.splice(categoryIndex, 1)
-}
-
-function selectCategory(category: any) {
-  if (hasCategory(category))
-    removeCategory(category)
-  else
-    filters.value.categories.push(category)
-}
 </script>
 
 <template>
-  <ACard>
-    <ACardMeta title="Filters">
-      <template #description>
-        <AFlex gap="10">
-          <AButton
-            v-for="category in categoriesConfig.categories"
-            :key="category.value"
-            :type="hasCategory(category) ? 'primary' : 'dashed'"
-            @click="selectCategory(category)"
-          >
-            {{ category.label }}
-          </AButton>
-        </AFlex>
-      </template>
-    </ACardMeta>
-  </ACard>
+  <ACardMeta title="Category" style="padding: 8px;">
+    <template #description>
+      <AFlex gap="10" style="margin-top: 10px;">
+        <ACheckboxGroup
+          v-model:value="filters.category"
+          :options="categoriesConfig.categories"
+        />
+      </AFlex>
+    </template>
+  </ACardMeta>
+
+  <ACardMeta title="Status" style="padding: 8px;">
+    <template #description>
+      <AFlex gap="10" style="margin-top: 10px;">
+        <ACheckboxGroup
+          v-model:value="filters.status"
+          :options="statusesConfig.statuses"
+        />
+      </AFlex>
+    </template>
+  </ACardMeta>
 </template>

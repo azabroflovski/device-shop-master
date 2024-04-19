@@ -1,12 +1,34 @@
-import { computed, watch } from 'vue'
+import { computed, reactive, watch } from 'vue'
 import { useAsyncState } from '@vueuse/core'
 import { getProducts } from '@/api/queries'
 import { useProductsSorting } from '@/composables/useProductsSorting'
 
 export function useProductsApi() {
+  const filters = reactive({
+    category: [],
+    status: [],
+  })
+
   const { sort, sortingOptions, sortingQueryParams } = useProductsSorting()
+
+  const queryParams = computed(() => {
+    const params = {
+      category: [],
+      status: [],
+      ...sortingQueryParams.value,
+    }
+
+    if (filters.category.length > 0)
+      params.category = filters.category
+
+    if (filters.status.length > 0)
+      params.status = filters.status
+
+    return params
+  })
+
   const { state, isLoading, execute } = useAsyncState(() => getProducts({
-    params: sortingQueryParams.value,
+    params: queryParams.value,
   }), null, { resetOnExecute: false })
 
   const data = computed(() => {
@@ -25,7 +47,7 @@ export function useProductsApi() {
     return !isLoading.value && !data.value?.length
   })
 
-  watch(sortingQueryParams, async () => {
+  watch(queryParams, async () => {
     await execute()
   })
 
@@ -33,6 +55,7 @@ export function useProductsApi() {
     sort,
     sortingOptions,
     data,
+    filters,
     isLoading,
     isLoadingWithoutData,
     isLoadingWithData,
