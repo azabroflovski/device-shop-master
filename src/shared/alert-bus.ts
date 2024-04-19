@@ -1,7 +1,6 @@
 import mitt from 'mitt'
 
-interface Events {
+export const alertBus = mitt<{
   REQUEST_LIMIT_ERROR: any
-}
-
-export const alertBus = mitt<Events>()
+  NETWORK_ERROR: any
+}>()

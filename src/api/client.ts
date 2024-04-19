@@ -37,6 +37,10 @@ export function createApiClient() {
 
     return response
   }, (error) => {
+    alertBus.emit('NETWORK_ERROR', {
+      title: 'NETWORK ERROR',
+      description: error,
+    })
     return Promise.reject(error)
   })
 
