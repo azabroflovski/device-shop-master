@@ -4,24 +4,26 @@ import { useAuth } from '@/composables/useAuth'
 
 /**
  * Navigation guard for checking authentication status before navigating to a route.
- * @param {RouteLocationNormalized} to - The target route location.
- * @param {RouteLocationNormalized} from - The current route location.
- * @param {NavigationGuardNext} next - The function to call to continue the navigation.
- * @returns {Promise<void>} A promise that resolves once the authentication status is checked.
+ * @param to - The target route.
+ * @param from - The current route.
+ * @param next - The function to proceed with navigation.
  */
 export const authGuard: NavigationGuard = async (to, from, next) => {
   const { init, isLoggedIn } = useAuth()
 
+  // Check if the user is logged in
   if (isLoggedIn.value) {
-    next()
+    next() // Proceed with navigation
     return
   }
 
+  // Initialize authentication state
   await init()
   await nextTick()
 
+  // Check authentication status again after initialization
   if (isLoggedIn.value)
-    next()
+    next() // Proceed with navigation
   else
-    next('/login')
+    next('/login') // Redirect to login page if not logged in
 }

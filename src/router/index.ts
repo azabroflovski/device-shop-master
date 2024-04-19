@@ -13,7 +13,9 @@ const router = createRouter({
       path: '/dashboard',
       name: 'dashboard',
       component: () => import('@/views/DashboardView.vue'),
-      beforeEnter: [authGuard],
+      beforeEnter: [
+        authGuard, // Guard to check authentication before entering the route
+      ],
     },
     {
       path: '/products/:id',
