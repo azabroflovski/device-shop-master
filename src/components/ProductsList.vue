@@ -26,17 +26,31 @@ const {
   refetchProducts,
 } = useProductsApi()
 
+/**
+ * Computed property to generate an empty description message based on the presence of filters.
+ */
 const emptyDescription = computed(() => {
   return hasFilters.value
     ? 'We didn\'t find anything. Try changing the filter settings.'
     : 'No data'
 })
 
+/**
+ * Handlers for various product options like editing and deleting.
+ */
 const productOptionHandlers = {
+  /**
+   * Handler for editing a product.
+   * @param product - The product to be edited.
+   */
   async edit(product: ProductItem) {
     productDialog.value.open(product)
   },
 
+  /**
+   * Handler for deleting a product.
+   * @param product - The product to be deleted.
+   */
   async delete(product: ProductItem) {
     try {
       isLoading.value = true
@@ -49,6 +63,11 @@ const productOptionHandlers = {
   },
 }
 
+/**
+ * Calls the appropriate product option handler based on the key.
+ * @param key - The key corresponding to the product option.
+ * @param product - The product related to the option.
+ */
 async function callProductOption(key: 'edit' | 'delete', product: ProductItem) {
   if (key in productOptionHandlers) {
     try {
