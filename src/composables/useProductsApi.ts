@@ -113,25 +113,33 @@ export function useProductsApi(options?: UseProductsApiOptions) {
     filters.status = []
   }
 
-  // Watch for changes in filters and sorting, then execute API request.
+  /**
+   *  Watch for changes in filters and sorting, then execute API request.
+   */
   watch([filters, sort], async () => {
     await execute()
   })
 
-  // Watch for changes in filters and reset pagination when filters change.
+  /**
+   * Watch for changes in filters and reset pagination when filters change.
+   */
   watch(filters, () => {
     pagination.page = 1
   })
 
-  // Watch for changes in search query, debounce, and execute API request.
+  /**
+   * Watch for changes in search query, debounce, and execute API request.
+   */
   watch(searchQuery, useDebounceFn(async () => {
     pagination.page = 1
 
     await execute()
   }, 300))
 
-  // Watch for changes in response headers to update pagination total.
-  // T_T sorry for any (времени нету)
+  /**
+   * Watch for changes in search query, debounce, and execute API request.
+   * T_T sorry for any (времени нету)
+   */
   watch(() => state.value?.headers, async (headers: any) => {
     if (headers && headers.has('x-total-count'))
       pagination.total = Number.parseInt(headers.get('x-total-count'))
