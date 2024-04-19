@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.0.2
+
+[compare changes](https://github.com-azabroflovski/azabroflovski/device-shop-master/compare/v1.0.1...v1.0.2)
+
+### 🏡 Chore
+
+- **ci:** Add env variable in build step (ebcdbbe)
+
+### ❤️ Contributors
+
+- Azabroflovski <azabroflovski@gmail.com>
+
 ## v1.0.1
 
 [compare changes](https://github.com-azabroflovski/azabroflovski/device-shop-master/compare/v1.0.0...v1.0.1)
