@@ -5,7 +5,7 @@ const { user, logoutWithRedirect } = useAuth()
 </script>
 
 <template>
-  <ACard>
+  <ACard v-if="user">
     <AFlex justify="space-between">
       <AFlex align="end">
         <AAvatar size="large">

@@ -8,7 +8,7 @@ interface AuthState {
     id: number
     name: string
     email: string
-    created_at: number
+    createdAt: number
   } | null
 }
 
