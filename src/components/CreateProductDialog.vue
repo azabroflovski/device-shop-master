@@ -4,7 +4,7 @@ import { storeProduct, updateProduct } from '@/api/queries'
 import { categoriesConfig, defaultModel } from '@/config/product'
 
 const emit = defineEmits<{
-  onSuccess: [product?: ProductItem]
+  success: []
 }>()
 
 const vm = getCurrentInstance()
@@ -87,7 +87,7 @@ function reset() {
 function resetWithSuccess() {
   show.value = false
   reset()
-  emit('onSuccess')
+  emit('success')
 }
 
 async function createOrSave() {

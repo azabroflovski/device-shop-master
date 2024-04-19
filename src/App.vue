@@ -16,7 +16,7 @@ import AlertProvider from '@/components/providers/AlertProvider.vue'
     <AlertProvider />
     <!-- Providers -->
 
-    <RouterView :key="$route.name" />
+    <RouterView :key="$route.name ?? ''" />
   </div>
 
   <AppFooter />

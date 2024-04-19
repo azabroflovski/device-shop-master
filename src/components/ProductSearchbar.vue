@@ -6,7 +6,7 @@ import { useSearchbar } from '@/composables/useSearchbar'
 import { searchProduct } from '@/api/queries'
 
 const { searchQuery, hasSearchQuery, onSearch } = useSearchbar()
-const { state: response, isLoading, execute } = useAsyncState(() => searchProduct(searchQuery.value), [], {
+const { state: response, isLoading, execute } = useAsyncState(() => searchProduct(searchQuery.value), null, {
   immediate: false,
 })
 

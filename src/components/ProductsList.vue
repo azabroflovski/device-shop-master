@@ -159,5 +159,5 @@ async function callProductOption(key: 'edit' | 'delete', product: ProductItem) {
     </template>
   </AEmpty>
 
-  <CreateProductDialog ref="productDialog" @on-success="refetchProducts" />
+  <CreateProductDialog ref="productDialog" @success="refetchProducts()" />
 </template>
