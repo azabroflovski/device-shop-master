@@ -8,6 +8,9 @@ const router = useRouter()
 const { isLoggedIn } = useAuth()
 const showLoginDialog = ref(false)
 
+/**
+ * Navigate to the dashboard or show the login dialog based on authentication status.
+ */
 function loginOrDashboard() {
   if (isLoggedIn.value) {
     router.push({
@@ -19,6 +22,9 @@ function loginOrDashboard() {
   }
 }
 
+/**
+ * Computed property for determining the label of the login button based on authentication status.
+ */
 const buttonLabel = computed(() => {
   return isLoggedIn.value ? 'Dashboard' : 'Login'
 })
