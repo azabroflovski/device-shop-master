@@ -15,6 +15,7 @@ const {
   sort,
   pagination,
   filters,
+  searchQuery,
   isLoading,
   sortingOptions,
   isLoadingWithoutData,
@@ -63,7 +64,12 @@ async function callProductOption(key: 'edit' | 'delete', product: ProductItem) {
         :options="sortingOptions" style="width: 150px"
       />
 
-      <AInputSearch placeholder="Filter" style="width: 200px" />
+      <AInputSearch
+        v-model:value="searchQuery"
+        placeholder="Filter"
+        allow-clear
+        style="width: 200px"
+      />
 
       <APopover trigger="click" placement="topRight">
         <ATooltip title="Filters" placement="bottom">
@@ -96,9 +102,11 @@ async function callProductOption(key: 'edit' | 'delete', product: ProductItem) {
   </div>
 
   <APagination
+    v-if="pagination.total"
     v-model:current="pagination.page"
     v-model:page-size="pagination.pageSize"
     :total="pagination.total"
+    show-size-changer
     show-less-items
     @change="refetchProducts"
   />

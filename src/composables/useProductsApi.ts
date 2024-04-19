@@ -1,12 +1,12 @@
-import { computed, reactive, watch } from 'vue'
-import { useAsyncState } from '@vueuse/core'
+import { computed, reactive, ref, watch } from 'vue'
+import { useAsyncState, useDebounceFn } from '@vueuse/core'
 import { getProducts } from '@/api/queries'
 import { useProductsSorting } from '@/composables/useProductsSorting'
 
 export function useProductsApi() {
   const pagination = reactive({
     page: 1,
-    pageSize: 1,
+    pageSize: 5,
     total: 0,
   })
 
@@ -14,6 +14,8 @@ export function useProductsApi() {
     category: [],
     status: [],
   })
+
+  const searchQuery = ref('')
 
   const hasFilters = computed(() => {
     return filters.status.length || filters.category.length
@@ -27,8 +29,12 @@ export function useProductsApi() {
       _limit: pagination.pageSize,
       category: [],
       status: [],
+      q: '',
       ...sortingQueryParams.value,
     }
+
+    if (searchQuery.value)
+      params.q = searchQuery.value
 
     if (hasFilters.value) {
       if (filters.category.length)
@@ -61,13 +67,19 @@ export function useProductsApi() {
     return !isLoading.value && !data.value?.length
   })
 
+  watch([filters, sort], async () => {
+    await execute()
+  })
+
   watch(filters, () => {
     pagination.page = 1
   })
 
-  watch([filters, sort], async () => {
+  watch(searchQuery, useDebounceFn(async () => {
+    pagination.page = 1
+
     await execute()
-  })
+  }, 300))
 
   // T_T sorry for any (времени нету)
   watch(() => state.value?.headers, async (headers: any) => {
@@ -81,6 +93,7 @@ export function useProductsApi() {
     data,
     pagination,
     filters,
+    searchQuery,
     isLoading,
     isLoadingWithoutData,
     isLoadingWithData,
