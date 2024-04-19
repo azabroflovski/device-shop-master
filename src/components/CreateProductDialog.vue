@@ -14,6 +14,9 @@ const model = ref<Partial<ProductItem>>(defaultModel() as ProductItem)
 const loading = ref(false)
 const hasError = ref(false)
 
+/**
+ * Computed property for determining text for the OK button
+ */
 const statusTip = computed(() => {
   if (model.value.status === 'draft')
     return 'Hidden from website catalog'
@@ -21,6 +24,9 @@ const statusTip = computed(() => {
   return ' Available online and visible in catalog'
 })
 
+/**
+ *  Watch for changes in the 'show' model and reset when the component is closed
+ */
 const okText = computed(() => {
   return model.value?.id ? 'Save' : 'Create'
 })
@@ -30,6 +36,9 @@ watch(show, (isOpen) => {
     reset()
 })
 
+/**
+ * Expose methods to parent component
+ */
 defineExpose({
   open,
   close,
@@ -44,16 +53,25 @@ function open(product?: ProductItem) {
   show.value = true
 }
 
+/**
+ * Function to open the modal and optionally set the product model
+ */
 function close() {
   show.value = false
 }
 
+/**
+ * Function to reset component state
+ */
 function reset() {
   loading.value = false
   hasError.value = false
   model.value = defaultModel() as ProductItem
 }
 
+/**
+ * Function to reset and close modal after a success
+ */
 function resetWithSuccess() {
   show.value = false
   reset()
