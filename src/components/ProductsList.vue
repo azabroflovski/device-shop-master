@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { FilterOutlined } from '@ant-design/icons-vue'
 import ProductCard from '@/components/ProductCard.vue'
 import CreateProductDialog from '@/components/CreateProductDialog.vue'
@@ -15,6 +15,8 @@ const {
   sort,
   pagination,
   filters,
+  hasFilters,
+  resetFilter,
   searchQuery,
   isLoading,
   sortingOptions,
@@ -23,6 +25,12 @@ const {
   isEmpty,
   refetchProducts,
 } = useProductsApi()
+
+const emptyDescription = computed(() => {
+  return hasFilters.value
+    ? 'We didn\'t find anything. Try changing the filter settings.'
+    : 'No data'
+})
 
 const productOptionHandlers = {
   async edit(product: ProductItem) {
@@ -118,7 +126,19 @@ async function callProductOption(key: 'edit' | 'delete', product: ProductItem) {
   <AEmpty
     v-if="isEmpty"
     style="margin-top: 30px;"
-  />
+  >
+    <template #description>
+      <div>{{ emptyDescription }}</div>
+
+      <AButton
+        v-if="hasFilters"
+        style="margin-top: 16px"
+        @click="resetFilter"
+      >
+        Reset filters
+      </AButton>
+    </template>
+  </AEmpty>
 
   <CreateProductDialog ref="productDialog" @on-success="refetchProducts" />
 </template>

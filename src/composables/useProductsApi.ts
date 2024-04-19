@@ -67,6 +67,11 @@ export function useProductsApi() {
     return !isLoading.value && !data.value?.length
   })
 
+  function resetFilter() {
+    filters.category = []
+    filters.status = []
+  }
+
   watch([filters, sort], async () => {
     await execute()
   })
@@ -93,6 +98,8 @@ export function useProductsApi() {
     data,
     pagination,
     filters,
+    hasFilters,
+    resetFilter,
     searchQuery,
     isLoading,
     isLoadingWithoutData,
