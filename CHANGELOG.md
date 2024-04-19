@@ -1,6 +1,39 @@
 # Changelog
 
 
+## v1.0.1
+
+[compare changes](https://github.com-azabroflovski/azabroflovski/device-shop-master/compare/v1.0.0...v1.0.1)
+
+### 🩹 Fixes
+
+- **ci:** Lock file issue (0d2e999)
+
+### 🏡 Chore
+
+- **useProductsApi:** Add jsdoc hints (f5867de)
+- **useAuth:** Add jsdoc hints (46b2858)
+- **useProductsSorting:** Add jsdoc hints (79cdaa7)
+- **useSearchbar:** Add jsdoc hints (3c3c3c5)
+- **config:** Add jsdoc hints (50ff478)
+- **utils:** Remove unused url util (3ac9226)
+- **ProductsList:** Add jsdoc hints (a2134cb)
+- Alert provider jsdoc hints (d314c76)
+- **router:** Add jsdoc hints (74e7f7a)
+- **CreateProductDialog:** Add jsdoc hints (95cf3e9)
+- **LoginButton:** Add jsdoc hints (0b2859c)
+- **LoginDialog:** Add jsdoc hints (df4fbc3)
+- **ProductCard:** Add jsdoc hints (db86618)
+- **ProductSearchbar:** Add jsdoc hints (2c37537)
+- **ProductsStatusLabel:** Add jsdoc hints (01a9368)
+- **useProductsApi:** Improve hints (b0b6244)
+- **config/auth:** Decrase delay for login and logout (09c3f9d)
+- Remove .env from repositor & remove unused API_KEY (6f2753f)
+
+### ❤️ Contributors
+
+- Azabroflovski <azabroflovski@gmail.com>
+
 ## v1.0.0
 
 [compare changes](https://github.com-azabroflovski/azabroflovski/device-shop-master/compare/v0.0.5...v1.0.0)
