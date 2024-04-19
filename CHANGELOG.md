@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.0.3
+
+[compare changes](https://github.com-azabroflovski/azabroflovski/device-shop-master/compare/v1.0.2...v1.0.3)
+
+### 🩹 Fixes
+
+- **CreateProductDialog:** Title based on exists model or new (8b32fcf)
+
+### ❤️ Contributors
+
+- Azabroflovski <azabroflovski@gmail.com>
+
 ## v1.0.2
 
 [compare changes](https://github.com-azabroflovski/azabroflovski/device-shop-master/compare/v1.0.1...v1.0.2)

@@ -1,7 +1,7 @@
 {
   "name": "device-shop-master",
   "type": "module",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "private": false,
   "scripts": {
     "dev": "vite",
