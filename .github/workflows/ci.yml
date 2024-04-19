@@ -22,6 +22,7 @@ concurrency:
 jobs:
   # Build job
   build:
+    environment: github-pages
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -38,6 +39,8 @@ jobs:
       - name: Install dependencies
         run: npm i
       - name: Build with Vite
+        env:
+          VITE_API_URL: ${{ vars.VITE_API_URL }}
         run: npm run build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
