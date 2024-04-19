@@ -15,11 +15,17 @@ const router = useRouter()
 const loading = ref(false)
 const hasError = ref(false)
 
+/**
+ * Watch for changes in the 'show' model and reset when the component is closed
+ */
 watch(show, (isOpen) => {
   if (isOpen)
     reset()
 })
 
+/**
+ * Reset login component state.
+ */
 function reset() {
   loading.value = false
   hasError.value = false
@@ -29,15 +35,22 @@ function reset() {
   }
 }
 
+/**
+ * Fill in login credentials for demo purpose.
+ */
 function letsGo() {
   credentials.value.email = 'howard.wolowitz@gmail.com'
   credentials.value.password = 'root'
 }
 
+/**
+ * Handle login process.
+ */
 async function handleLogin() {
   loading.value = true
   const success = await attemptLogin(credentials.value)
 
+  // If login attempt is successful, redirect to dashboard
   if (success) {
     show.value = false
     await router.push({
@@ -46,6 +59,7 @@ async function handleLogin() {
     return
   }
 
+  // Show error message if login attempt fails
   hasError.value = true
   setTimeout(() => {
     hasError.value = false
