@@ -1,6 +1,64 @@
 # Changelog
 
 
+## v1.0.0
+
+[compare changes](https://github.com-azabroflovski/azabroflovski/device-shop-master/compare/v0.0.5...v1.0.0)
+
+### 🚀 Enhancements
+
+- Add db.json (for running json-server) (1b02556)
+- Add element-plus & configure auto imports (dc1a519)
+- Move api to json-server (6b53205)
+- Use more clear api for http requests (migrate to axios) (ca2d33b)
+- Migrate dashboard to new api (json-server) (3f61b24)
+- Configure eslint (antfu config) (1f0c7bc)
+- **json-server:** Add initial products (5023e29)
+- **dashboard:** Add product filters (2baba28)
+- **dashboard:** Add product filters (03466eb)
+- Add products pagination (81d78b8)
+- Add network error alert (d57cc46)
+- **dashboard:** Search in products (51712ab)
+- **dashboard:** Improve empty products message (426fbab)
+- Pagination in home page (dd970c4)
+- Add sorting in home page (e84a43a)
+
+### 🩹 Fixes
+
+- Eslint issues (791e8d0)
+- Naming issue (useProductSorting => useProductsSorting) (4464755)
+- **AuthActionsProvider:** Handle create product button (ee5d9cf)
+- Use fixed version of json-server (7416cbf)
+- Json-server host (039704b)
+- **ProductSearchbar:** New searching api (c26fd21)
+- **api:** FindProduct transformer issue (handling single object instead array) (ddafa67)
+- Json-server uses string for resource ids (ef5de8c)
+- Pagination issue (double fetch) (4a162a1)
+
+### 💅 Refactors
+
+- Improve code quality (decomposite products api) (e18b33a)
+- Better loading state when deleting product (b789991)
+- Use productsApi in home page (99cdbe8)
+- Decomposite product categories and model (473168f)
+- User fields improvements (6e5bc49)
+
+### 🏡 Chore
+
+- Revert element-plus installation (and auto imports) (8c08b16)
+- Return back typechecking (47dd9cd)
+- Disable typecheck (a9d4d89)
+- Remove --watching parameter from json-server command (5fc5712)
+- Json-server port (41e3ab1)
+
+### 🎨 Styles
+
+- Reformat code via eslint rules (f665f53)
+
+### ❤️ Contributors
+
+- Azabroflovski <azabroflovski@gmail.com>
+
 ## v0.0.5
 
 [compare changes](https://github.com-azabroflovski/azabroflovski/device-shop-master/compare/v0.0.4...v0.0.5)
