@@ -3,20 +3,36 @@ import { MoreOutlined } from '@ant-design/icons-vue'
 import ProductStatusLabel from '@/components/ProductStatusLabel.vue'
 
 interface Props {
+  /**
+   * The product item.
+   */
   product: ProductItem
+
+  /**
+   * Whether to hide card actions.
+   */
   hideActions?: boolean
+
+  /**
+   * Whether to hide card footer
+   */
   hideFooter?: boolean
 }
 
-interface Emits {
-  onOptionClick: [ key: 'edit' | 'delete', product: ProductItem]
-}
-
 const props = defineProps<Props>()
-const emit = defineEmits<Emits>()
+const emit = defineEmits<{
+  onOptionClick: [ key: 'edit' | 'delete', product: ProductItem]
+}>()
 
-// NOTE: Ant design doest not expose types for this
-// i am use any for faster implementation
+/**
+ * Handles the click event of the options.
+ *
+ * NOTE: Ant design doest not expose types for this
+ * I am use any for faster implementation
+ *
+ * @param {object} option - The clicked option.
+ * @param {'edit' | 'delete'} option.key - The key of the clicked option.
+ */
 function handleOptionsClick({ key }: any) {
   emit('onOptionClick', key, props.product)
 }
