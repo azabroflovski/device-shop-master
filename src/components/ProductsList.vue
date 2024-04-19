@@ -13,6 +13,7 @@ const productDialog = ref()
 const {
   data,
   sort,
+  pagination,
   filters,
   isLoading,
   sortingOptions,
@@ -93,6 +94,14 @@ async function callProductOption(key: 'edit' | 'delete', product: ProductItem) {
       @on-option-click="callProductOption"
     />
   </div>
+
+  <APagination
+    v-if="pagination.total"
+    v-model:current="pagination.page"
+    :total="pagination.total"
+    show-less-items
+    @change="refetchProducts"
+  />
 
   <AFlex v-if="isLoadingWithoutData">
     <ASkeleton active />

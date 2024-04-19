@@ -4,6 +4,11 @@ import { getProducts } from '@/api/queries'
 import { useProductsSorting } from '@/composables/useProductsSorting'
 
 export function useProductsApi() {
+  const pagination = reactive({
+    page: 1,
+    total: 0,
+  })
+
   const filters = reactive({
     category: [],
     status: [],
@@ -13,6 +18,8 @@ export function useProductsApi() {
 
   const queryParams = computed(() => {
     const params = {
+      _page: 1,
+      _limit: 1,
       category: [],
       status: [],
       ...sortingQueryParams.value,
@@ -55,6 +62,7 @@ export function useProductsApi() {
     sort,
     sortingOptions,
     data,
+    pagination,
     filters,
     isLoading,
     isLoadingWithoutData,

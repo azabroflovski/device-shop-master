@@ -9,14 +9,16 @@ useHead({
 </script>
 
 <template>
-  <section>
-    <h3 style="margin-bottom: 10px">
-      You profile
-    </h3>
-    <AuthUserCard />
-  </section>
+  <main style="padding-bottom: 60px">
+    <section>
+      <h3 style="margin-bottom: 10px">
+        You profile
+      </h3>
+      <AuthUserCard />
+    </section>
 
-  <section style="margin-top: 40px">
-    <ProductsList />
-  </section>
+    <section style="margin-top: 40px">
+      <ProductsList />
+    </section>
+  </main>
 </template>

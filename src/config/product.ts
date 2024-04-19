@@ -1,3 +1,7 @@
+export const paginationConfig = {
+  perPage: 1,
+}
+
 export const sortingConfig = {
   default: '-price',
   options: [
